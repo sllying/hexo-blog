@@ -142,14 +142,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/Code/" style="color: #00a596">
+                <a href="/tags/Code/" style="color: #ff7d73">
                     Code
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Java/" style="color: #00bcd4">
+                <a href="/tags/Java/" style="color: #ffa2c4">
                     Java
                 </a>
             </span>
@@ -186,17 +186,16 @@
     public String getName() &#123; return name; &#125;
     public String getEmail() &#123; return email; &#125;
 &#125;
-2. 数据访问层（dao）
-接口定义（UserDao.java）：
-
-java
-public interface UserDao &#123;
+</code></pre>
+<ol start="2">
+<li>数据访问层（dao）<br>接口定义（UserDao.java）：</li>
+</ol>
+<pre><code class="language-java">public interface UserDao &#123;
     User findUserById(int id); // 根据ID查询用户
 &#125;
 接口实现（UserDaoImpl.java）：
-
-java
-import entity.User;
+</code></pre>
+<pre><code class="language-java">import entity.User;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -216,17 +215,16 @@ public class UserDaoImpl implements UserDao &#123;
         return userDB.get(id); // 模拟数据库查询
     &#125;
 &#125;
-3. 业务逻辑层（service）
-接口定义（UserService.java）：
-
-java
-public interface UserService &#123;
+</code></pre>
+<ol start="3">
+<li>业务逻辑层（service）<br>接口定义（UserService.java）：</li>
+</ol>
+<pre><code class="language-java">public interface UserService &#123;
     User getUserInfo(int userId); // 获取用户信息
 &#125;
 接口实现（UserServiceImpl.java）：
-
-java
-import dao.UserDao;
+</code></pre>
+<pre><code class="language-java">import dao.UserDao;
 import dao.UserDaoImpl;
 import entity.User;
 
@@ -252,9 +250,11 @@ public class UserServiceImpl implements UserService &#123;
         return user;
     &#125;
 &#125;
-4. 表示层（presentation/MainApp.java）
-java
-import service.UserService;
+</code></pre>
+<ol start="4">
+<li>表示层（presentation&#x2F;MainApp.java）</li>
+</ol>
+<pre><code class="language-java">import service.UserService;
 import service.UserServiceImpl;
 import entity.User;
 
@@ -280,35 +280,33 @@ public class MainApp &#123;
         &#125;
     &#125;
 &#125;
-执行流程说明
-表示层接收用户输入（ID=1）
-
-业务逻辑层处理业务规则（验证ID有效性）
-
-数据访问层执行数据查询操作
-
-结果逐层返回，最终在表示层展示
-
-表示层：接收用户请求，ID=1
-Service层：处理用户信息请求
-DAO层：查询用户ID=1
-Service层：验证用户权限
-
-查询结果：
-ID: 1
-姓名: 张三
-邮箱: zhangsan@example.com
-三层架构的优势
-解耦合：各层独立变化不影响其他层
-
-复用性：业务逻辑可被多个表示层复用
-
-可维护性：问题定位更快速
-
-分工协作：不同开发者可并行开发不同层
-
-提示：实际项目中常结合Spring框架实现依赖注入，进一步降低层间耦合
 </code></pre>
+<h1 id="执行流程说明"><a href="#执行流程说明" class="headerlink" title="执行流程说明"></a>执行流程说明</h1><h2 id="流程步骤"><a href="#流程步骤" class="headerlink" title="流程步骤"></a>流程步骤</h2><ol>
+<li><strong>表示层</strong>接收用户输入（ID&#x3D;1）</li>
+<li>**业务逻辑层（Service层）**处理业务规则（验证ID有效性）</li>
+<li>**数据访问层（DAO层）**执行数据查询操作</li>
+<li>查询结果逐层返回，最终在表示层展示</li>
+</ol>
+<hr>
+<h2 id="详细说明"><a href="#详细说明" class="headerlink" title="详细说明"></a>详细说明</h2><ul>
+<li><strong>表示层</strong>：接收用户请求，ID&#x3D;1  </li>
+<li><strong>Service层</strong>：处理用户信息请求  </li>
+<li><strong>DAO层</strong>：查询用户ID&#x3D;1  </li>
+<li><strong>Service层</strong>：验证用户权限</li>
+</ul>
+<hr>
+<h2 id="查询结果"><a href="#查询结果" class="headerlink" title="查询结果"></a>查询结果</h2><p>ID: 1<br>姓名: 张三<br>邮箱: <a href="mailto:&#122;&#104;&#x61;&#110;&#103;&#115;&#x61;&#x6e;&#64;&#x65;&#x78;&#97;&#x6d;&#112;&#108;&#101;&#x2e;&#99;&#111;&#109;">zhangsan@example.com</a></p>
+<hr>
+<h2 id="三层架构的优势"><a href="#三层架构的优势" class="headerlink" title="三层架构的优势"></a>三层架构的优势</h2><ul>
+<li><strong>解耦合</strong>：各层独立变化不影响其他层  </li>
+<li><strong>复用性</strong>：业务逻辑可被多个表示层复用  </li>
+<li><strong>可维护性</strong>：问题定位更快速  </li>
+<li><strong>分工协作</strong>：不同开发者可并行开发不同层</li>
+</ul>
+<hr>
+<blockquote>
+<p>💡 提示：实际项目中常结合 <strong>Spring 框架</strong> 实现依赖注入，进一步降低层间耦合。</p>
+</blockquote>
 
     </div>
     
