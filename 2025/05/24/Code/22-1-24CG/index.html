@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Java三层架构入门指南 | SLLYING</title>
+    <meta name="author" content="酥硫萝嘤" />
+    <meta name="description" content="sllying" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>SLLYING</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;SLLYING</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Java三层架构入门指南</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/5/24
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                技术
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Code/" style="color: #00a596">
+                    Code
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Java/" style="color: #00bcd4">
+                    Java
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="Java三层架构入门指南"><a href="#Java三层架构入门指南" class="headerlink" title="Java三层架构入门指南"></a>Java三层架构入门指南</h1><h2 id="什么是三层架构？"><a href="#什么是三层架构？" class="headerlink" title="什么是三层架构？"></a>什么是三层架构？</h2><p>三层架构是一种常用的软件设计模式，将应用程序分为三个逻辑层次：</p>
+<ol>
+<li><strong>表示层（Presentation Layer）</strong>：用户交互界面</li>
+<li><strong>业务逻辑层（Business Logic Layer）</strong>：处理业务规则和逻辑</li>
+<li><strong>数据访问层（Data Access Layer）</strong>：负责数据存取操作</li>
+</ol>
+<p>这种分层设计使代码更易维护、扩展和测试。</p>
+<hr>
+<h2 id="简单三层架构实现示例"><a href="#简单三层架构实现示例" class="headerlink" title="简单三层架构实现示例"></a>简单三层架构实现示例</h2><p>下面通过一个用户查询功能演示基本实现（使用内存数据模拟数据库）</p>
+<h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><p>src<br>├── entity<br>│ └── User.java &#x2F;&#x2F; 实体类<br>├── dao<br>│ ├── UserDao.java &#x2F;&#x2F; 数据访问接口<br>│ └── UserDaoImpl.java &#x2F;&#x2F; 数据访问实现<br>├── service<br>│ ├── UserService.java &#x2F;&#x2F; 业务逻辑接口<br>│ └── UserServiceImpl.java &#x2F;&#x2F; 业务逻辑实现<br>└── presentation<br>└── MainApp.java &#x2F;&#x2F; 表示层入口</p>
+<h3 id="1-实体类（entity-User-java）"><a href="#1-实体类（entity-User-java）" class="headerlink" title="1. 实体类（entity&#x2F;User.java）"></a>1. 实体类（entity&#x2F;User.java）</h3><pre><code class="language-java">public class User &#123;
+    private int id;
+    private String name;
+    private String email;
+    
+    // 构造方法
+    public User(int id, String name, String email) &#123;
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    &#125;
+    
+    // Getter方法
+    public int getId() &#123; return id; &#125;
+    public String getName() &#123; return name; &#125;
+    public String getEmail() &#123; return email; &#125;
+&#125;
+2. 数据访问层（dao）
+接口定义（UserDao.java）：
+
+java
+public interface UserDao &#123;
+    User findUserById(int id); // 根据ID查询用户
+&#125;
+接口实现（UserDaoImpl.java）：
+
+java
+import entity.User;
+import java.util.HashMap;
+import java.util.Map;
+
+public class UserDaoImpl implements UserDao &#123;
+    // 模拟数据库
+    private static final Map&lt;Integer, User&gt; userDB = new HashMap&lt;&gt;();
+    
+    static &#123;
+        // 初始化测试数据
+        userDB.put(1, new User(1, &quot;张三&quot;, &quot;zhangsan@example.com&quot;));
+        userDB.put(2, new User(2, &quot;李四&quot;, &quot;lisi@example.com&quot;));
+    &#125;
+    
+    @Override
+    public User findUserById(int id) &#123;
+        System.out.println(&quot;DAO层：查询用户ID=&quot; + id);
+        return userDB.get(id); // 模拟数据库查询
+    &#125;
+&#125;
+3. 业务逻辑层（service）
+接口定义（UserService.java）：
+
+java
+public interface UserService &#123;
+    User getUserInfo(int userId); // 获取用户信息
+&#125;
+接口实现（UserServiceImpl.java）：
+
+java
+import dao.UserDao;
+import dao.UserDaoImpl;
+import entity.User;
+
+public class UserServiceImpl implements UserService &#123;
+    private final UserDao userDao = new UserDaoImpl();
+    
+    @Override
+    public User getUserInfo(int userId) &#123;
+        System.out.println(&quot;Service层：处理用户信息请求&quot;);
+        
+        // 业务逻辑处理（示例：简单验证）
+        if(userId &lt;= 0) &#123;
+            throw new IllegalArgumentException(&quot;用户ID无效&quot;);
+        &#125;
+        
+        // 调用DAO层获取数据
+        User user = userDao.findUserById(userId);
+        
+        // 业务处理（示例：补充信息）
+        if(user != null) &#123;
+            System.out.println(&quot;Service层：验证用户权限&quot;);
+        &#125;
+        return user;
+    &#125;
+&#125;
+4. 表示层（presentation/MainApp.java）
+java
+import service.UserService;
+import service.UserServiceImpl;
+import entity.User;
+
+public class MainApp &#123;
+    public static void main(String[] args) &#123;
+        UserService userService = new UserServiceImpl();
+        
+        // 模拟用户输入ID=1
+        int inputUserId = 1;
+        System.out.println(&quot;表示层：接收用户请求，ID=&quot; + inputUserId);
+        
+        // 调用Service层
+        User user = userService.getUserInfo(inputUserId);
+        
+        // 显示结果
+        if(user != null) &#123;
+            System.out.println(&quot;\n查询结果：&quot;);
+            System.out.println(&quot;ID: &quot; + user.getId());
+            System.out.println(&quot;姓名: &quot; + user.getName());
+            System.out.println(&quot;邮箱: &quot; + user.getEmail());
+        &#125; else &#123;
+            System.out.println(&quot;用户不存在&quot;);
+        &#125;
+    &#125;
+&#125;
+执行流程说明
+表示层接收用户输入（ID=1）
+
+业务逻辑层处理业务规则（验证ID有效性）
+
+数据访问层执行数据查询操作
+
+结果逐层返回，最终在表示层展示
+
+表示层：接收用户请求，ID=1
+Service层：处理用户信息请求
+DAO层：查询用户ID=1
+Service层：验证用户权限
+
+查询结果：
+ID: 1
+姓名: 张三
+邮箱: zhangsan@example.com
+三层架构的优势
+解耦合：各层独立变化不影响其他层
+
+复用性：业务逻辑可被多个表示层复用
+
+可维护性：问题定位更快速
+
+分工协作：不同开发者可并行开发不同层
+
+提示：实际项目中常结合Spring框架实现依赖注入，进一步降低层间耦合
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2025 - 2025 SLLYING
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;酥硫萝嘤
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>

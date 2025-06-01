@@ -189,11 +189,214 @@
         
         <span class="tag">
             
-            <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="color: #03a9f4">博客</a>
+            <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="color: #00bcd4">博客</a>
         </span>
         
     </div>
     <a href="/2024/01/01/test/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2025/05/24/Code/22-1-24CG/">
+        <h2 class="post-title">Java三层架构入门指南</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                技术
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/5/24
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="Java三层架构入门指南"><a href="#Java三层架构入门指南" class="headerlink" title="Java三层架构入门指南"></a>Java三层架构入门指南</h1><h2 id="什么是三层架构？"><a href="#什么是三层架构？" class="headerlink" title="什么是三层架构？"></a>什么是三层架构？</h2><p>三层架构是一种常用的软件设计模式，将应用程序分为三个逻辑层次：</p>
+<ol>
+<li><strong>表示层（Presentation Layer）</strong>：用户交互界面</li>
+<li><strong>业务逻辑层（Business Logic Layer）</strong>：处理业务规则和逻辑</li>
+<li><strong>数据访问层（Data Access Layer）</strong>：负责数据存取操作</li>
+</ol>
+<p>这种分层设计使代码更易维护、扩展和测试。</p>
+<hr>
+<h2 id="简单三层架构实现示例"><a href="#简单三层架构实现示例" class="headerlink" title="简单三层架构实现示例"></a>简单三层架构实现示例</h2><p>下面通过一个用户查询功能演示基本实现（使用内存数据模拟数据库）</p>
+<h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><p>src<br>├── entity<br>│ └── User.java &#x2F;&#x2F; 实体类<br>├── dao<br>│ ├── UserDao.java &#x2F;&#x2F; 数据访问接口<br>│ └── UserDaoImpl.java &#x2F;&#x2F; 数据访问实现<br>├── service<br>│ ├── UserService.java &#x2F;&#x2F; 业务逻辑接口<br>│ └── UserServiceImpl.java &#x2F;&#x2F; 业务逻辑实现<br>└── presentation<br>└── MainApp.java &#x2F;&#x2F; 表示层入口</p>
+<h3 id="1-实体类（entity-User-java）"><a href="#1-实体类（entity-User-java）" class="headerlink" title="1. 实体类（entity&#x2F;User.java）"></a>1. 实体类（entity&#x2F;User.java）</h3><pre><code class="language-java">public class User &#123;
+    private int id;
+    private String name;
+    private String email;
+    
+    // 构造方法
+    public User(int id, String name, String email) &#123;
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    &#125;
+    
+    // Getter方法
+    public int getId() &#123; return id; &#125;
+    public String getName() &#123; return name; &#125;
+    public String getEmail() &#123; return email; &#125;
+&#125;
+2. 数据访问层（dao）
+接口定义（UserDao.java）：
+
+java
+public interface UserDao &#123;
+    User findUserById(int id); // 根据ID查询用户
+&#125;
+接口实现（UserDaoImpl.java）：
+
+java
+import entity.User;
+import java.util.HashMap;
+import java.util.Map;
+
+public class UserDaoImpl implements UserDao &#123;
+    // 模拟数据库
+    private static final Map&lt;Integer, User&gt; userDB = new HashMap&lt;&gt;();
+    
+    static &#123;
+        // 初始化测试数据
+        userDB.put(1, new User(1, &quot;张三&quot;, &quot;zhangsan@example.com&quot;));
+        userDB.put(2, new User(2, &quot;李四&quot;, &quot;lisi@example.com&quot;));
+    &#125;
+    
+    @Override
+    public User findUserById(int id) &#123;
+        System.out.println(&quot;DAO层：查询用户ID=&quot; + id);
+        return userDB.get(id); // 模拟数据库查询
+    &#125;
+&#125;
+3. 业务逻辑层（service）
+接口定义（UserService.java）：
+
+java
+public interface UserService &#123;
+    User getUserInfo(int userId); // 获取用户信息
+&#125;
+接口实现（UserServiceImpl.java）：
+
+java
+import dao.UserDao;
+import dao.UserDaoImpl;
+import entity.User;
+
+public class UserServiceImpl implements UserService &#123;
+    private final UserDao userDao = new UserDaoImpl();
+    
+    @Override
+    public User getUserInfo(int userId) &#123;
+        System.out.println(&quot;Service层：处理用户信息请求&quot;);
+        
+        // 业务逻辑处理（示例：简单验证）
+        if(userId &lt;= 0) &#123;
+            throw new IllegalArgumentException(&quot;用户ID无效&quot;);
+        &#125;
+        
+        // 调用DAO层获取数据
+        User user = userDao.findUserById(userId);
+        
+        // 业务处理（示例：补充信息）
+        if(user != null) &#123;
+            System.out.println(&quot;Service层：验证用户权限&quot;);
+        &#125;
+        return user;
+    &#125;
+&#125;
+4. 表示层（presentation/MainApp.java）
+java
+import service.UserService;
+import service.UserServiceImpl;
+import entity.User;
+
+public class MainApp &#123;
+    public static void main(String[] args) &#123;
+        UserService userService = new UserServiceImpl();
+        
+        // 模拟用户输入ID=1
+        int inputUserId = 1;
+        System.out.println(&quot;表示层：接收用户请求，ID=&quot; + inputUserId);
+        
+        // 调用Service层
+        User user = userService.getUserInfo(inputUserId);
+        
+        // 显示结果
+        if(user != null) &#123;
+            System.out.println(&quot;\n查询结果：&quot;);
+            System.out.println(&quot;ID: &quot; + user.getId());
+            System.out.println(&quot;姓名: &quot; + user.getName());
+            System.out.println(&quot;邮箱: &quot; + user.getEmail());
+        &#125; else &#123;
+            System.out.println(&quot;用户不存在&quot;);
+        &#125;
+    &#125;
+&#125;
+执行流程说明
+表示层接收用户输入（ID=1）
+
+业务逻辑层处理业务规则（验证ID有效性）
+
+数据访问层执行数据查询操作
+
+结果逐层返回，最终在表示层展示
+
+表示层：接收用户请求，ID=1
+Service层：处理用户信息请求
+DAO层：查询用户ID=1
+Service层：验证用户权限
+
+查询结果：
+ID: 1
+姓名: 张三
+邮箱: zhangsan@example.com
+三层架构的优势
+解耦合：各层独立变化不影响其他层
+
+复用性：业务逻辑可被多个表示层复用
+
+可维护性：问题定位更快速
+
+分工协作：不同开发者可并行开发不同层
+
+提示：实际项目中常结合Spring框架实现依赖注入，进一步降低层间耦合
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Code/" style="color: #00a596">Code</a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/Java/" style="color: #ffa2c4">Java</a>
+        </span>
+        
+    </div>
+    <a href="/2025/05/24/Code/22-1-24CG/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
@@ -280,17 +483,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #00a596">教程</a>
+            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #ffa2c4">教程</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/CG/" style="color: #00bcd4">CG</a>
+            <a href="/tags/CG/" style="color: #ff7d73">CG</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/CG%E6%8F%90%E5%8F%96/" style="color: #ff7d73">CG提取</a>
+            <a href="/tags/CG%E6%8F%90%E5%8F%96/" style="color: #03a9f4">CG提取</a>
         </span>
         
     </div>
@@ -338,17 +541,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #ffa2c4">教程</a>
+            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #03a9f4">教程</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/CG/" style="color: #03a9f4">CG</a>
+            <a href="/tags/CG/" style="color: #ff7d73">CG</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/CG%E6%8F%90%E5%8F%96/" style="color: #00a596">CG提取</a>
+            <a href="/tags/CG%E6%8F%90%E5%8F%96/" style="color: #00bcd4">CG提取</a>
         </span>
         
     </div>
@@ -401,17 +604,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #03a9f4">教程</a>
+            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #ff7d73">教程</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="color: #ffa2c4">压缩包</a>
+            <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/" style="color: #03a9f4">压缩包</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%A0%B4%E8%A7%A3/" style="color: #00bcd4">压缩包破解</a>
+            <a href="/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%A0%B4%E8%A7%A3/" style="color: #00a596">压缩包破解</a>
         </span>
         
     </div>
@@ -462,17 +665,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #03a9f4">教程</a>
+            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #ff7d73">教程</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Live2D/" style="color: #00a596">Live2D</a>
+            <a href="/tags/Live2D/" style="color: #ffa2c4">Live2D</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Live2D%E6%8F%90%E5%8F%96/" style="color: #ff7d73">Live2D提取</a>
+            <a href="/tags/Live2D%E6%8F%90%E5%8F%96/" style="color: #00bcd4">Live2D提取</a>
         </span>
         
     </div>
@@ -531,17 +734,17 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #ffa2c4">教程</a>
+            <a href="/tags/%E6%95%99%E7%A8%8B/" style="color: #00bcd4">教程</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/CG/" style="color: #00a596">CG</a>
+            <a href="/tags/CG/" style="color: #ff7d73">CG</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/CG%E6%8F%90%E5%8F%96/" style="color: #ff7d73">CG提取</a>
+            <a href="/tags/CG%E6%8F%90%E5%8F%96/" style="color: #00bcd4">CG提取</a>
         </span>
         
     </div>
