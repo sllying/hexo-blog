@@ -1,0 +1,6 @@
+node_modules/
+.site-build.json
+.preview-*.log
+.test-output/
+playwright-report/
+test-results/

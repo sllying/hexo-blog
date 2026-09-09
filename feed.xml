@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>SLLYING</title>
+    <link>http://localhost:4173/</link>
+    <description>写代码，也收藏幻想。</description>
+    <language>zh-CN</language>
+    <atom:link href="http://localhost:4173/feed.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Tue, 08 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>让 AI 结对留下可接手的记录</title>
+      <link>http://localhost:4173/posts/ai-pairing-workflow/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/ai-pairing-workflow/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>跨任务继续开发时，最有用的上下文是当前状态、未完成项和证据。堆一份很长的“已完成总结”，下一次仍然会从错误假设开始。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;我会让不同工具接着同一个项目工作。这样的协作里，最容易丢失的不是代码，而是“这段代码目前到底验证到了哪一步”。离线应用的任务就出现过：上一轮完成的是静态分析，下一轮却继承了“全部可用”的结论。&lt;/p&gt;
+                &lt;h2&gt;交接只写对下一步有影响的状态&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;目标：发布目录复制后可以离线启动
+已确认：生产入口能打开，本地 API 可读写
+未完成：资源清单仍有缺失条目
+已知问题：Worker 初始化需要实际等待结果
+下一步：从发布副本运行相同冒烟流程&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;这份记录应与代码变化同步更新。命令失败需要写出失败原因；后台过程尚未结束，就保持进行中；环境无法提供的依赖，也不能被归入代码已经通过。&lt;/p&gt;
+                &lt;h2&gt;给每个改动一个明确的检查对象&lt;/h2&gt;
+                &lt;p&gt;接口改动检查调用者和返回结构，构建改动检查真正的产物，导出改动读回最终文件。检查对象要尽量靠近用户得到的结果。只看函数存在、文件生成或工具返回零退出码，经常不足以支持完成结论。&lt;/p&gt;
+                &lt;h2&gt;保留决策理由，让下一轮知道为什么&lt;/h2&gt;
+                &lt;p&gt;例如，“没有修改共享 SQL，因为注册接口还使用原始枚举”比“改了导出显示”更有价值；“Push 确认不能推进 Pull 游标，因为中间可能有其他设备变更”能防止下一轮优化把正确边界合回去。&lt;/p&gt;
+                &lt;p&gt;我现在把这些短句写在任务交接里。它们不需要很长，但需要能让下一次工作从正确的事实开始。&lt;/p&gt;
+            </content:encoded>
+      <category>协作手记</category>
+      <category>AI 工具</category>
+      <category>工作流</category>
+      <category>交接</category>
+    </item>
+    <item>
+      <title>Claude Code 说已经完全离线，我为什么还要继续验证</title>
+      <link>http://localhost:4173/posts/claude-code-notes/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/claude-code-notes/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>网络拦截、本地 Mock API 和大量媒体文件让静态分析得出了乐观结论，实际运行却暴露出缺失资源、错误路由和 Worker 初始化问题。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;同一个离线化任务，让我看到了“分析已经完成”和“用户能正常使用”之间的差距。Claude Code 先检查了网络拦截、本地 API 和媒体目录，给出了应用已经完全本地化的结论。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;本文对照了本地 Claude Code 分析记录和后续 Codex 执行记录。它们反映任务推进时的状态，不把两次记录视为同一时刻的对照实验。&lt;/p&gt;
+                &lt;h2&gt;初步证据都是真的，结论却走得太远&lt;/h2&gt;
+                &lt;p&gt;目录里确实存在大量音视频，自定义协议和请求拦截也已经存在。这些证据能说明项目采用了离线化方案，却不能直接证明全部课程资源齐全、每条生产路由正确，或模型能够在目标运行时真正初始化。&lt;/p&gt;
+                &lt;p&gt;“没有找到某功能”也只能报告搜索范围和当前发现。把它写成需求不存在，会直接跳过用户需要的验证。&lt;/p&gt;
+                &lt;h2&gt;后续执行发现了什么&lt;/h2&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;严格资源审计仍报告真实缺失媒体，文件总量不能代替引用闭包。&lt;/li&gt;
+                    &lt;li&gt;本地分支打开了旧调试路由，需要检查实际进入的课程页面。&lt;/li&gt;
+                    &lt;li&gt;Worker 脚本能够读取，不代表目标 Electron 能从该协议启动 Worker。&lt;/li&gt;
+                    &lt;li&gt;从独立发布目录复制启动，需要再验证资源解析和本地数据路径。&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;h2&gt;我现在会追问证据的层级&lt;/h2&gt;
+                &lt;p&gt;静态扫描证明声明和文件关系；构建证明打包流程能走通；启动冒烟证明主路径能运行；断网下的功能验收才接近“离线可用”。这几个层级都值得保留，也必须分别表述。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;[已确认] 目标文件在发布包中
+[已确认] 应用能够启动到指定页面
+[待验证] 每个课程都能完成核心交互
+[阻塞]   引用清单中仍缺少原始媒体&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;后续记录还有对“Worker 可访问”的进一步纠正：必须等待初始化结果，不能只检查资源响应。复盘里最值得保留的，正是这种结论被新证据修正的过程。&lt;/p&gt;
+            </content:encoded>
+      <category>协作手记</category>
+      <category>Claude Code</category>
+      <category>Electron</category>
+      <category>验证</category>
+    </item>
+    <item>
+      <title>和 Codex 做代码审查：测试全绿之后，还该看哪里</title>
+      <link>http://localhost:4173/posts/codex-dialogue/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/codex-dialogue/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>一轮实际审查里，测试、Lint 和启动检查都通过，调度窗口、状态文件和失败 Promise 仍然藏着可复现的问题。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;我让 Codex 检查一个由桌面壳、控制服务和任务执行端组成的工具。要求很明确：先确认问题是否存在。初始测试、Lint 和启动自检都通过，但后续审查仍找到了多处现有测试没有覆盖的边界。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;来自真实只读审查记录。本文只保留通用技术现象，不公开项目、账号、执行地址和业务任务。&lt;/p&gt;
+                &lt;h2&gt;从边界交接处开始&lt;/h2&gt;
+                &lt;p&gt;一个执行脚本把 Node 路径当作必需参数，调用它的两个 runner 却都没有传入。单独看脚本与 runner，它们各自都容易被认为合理；沿着真实调用链连起来，任务会在进入业务代码之前直接失败。&lt;/p&gt;
+                &lt;p&gt;另一个状态文件允许根对象成功解析，但没有验证数组中的每个元素。&lt;code&gt;{&quot;tasks&quot;:[null]}&lt;/code&gt; 是合法 JSON，却会在启动遍历时访问 &lt;code&gt;task.status&lt;/code&gt; 并抛出异常。语法校验通过，从来不能代替结构校验。&lt;/p&gt;
+                &lt;h2&gt;留意被永久记住的失败&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;let loading;
+
+function loadRuntimeConfig() {
+    if (!loading) {
+        loading = requestConfig().catch((error) =&amp;gt; {
+            loading = null;
+            throw error;
+        });
+    }
+    return loading;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;原问题是一次 IPC 请求被缓存为 Promise，首次超时后缓存一直指向 rejected Promise，所有后续请求都会立即失败。示例展示失败后释放缓存的基本做法；实际系统还需要考虑重试间隔、取消以及配置有效期。&lt;/p&gt;
+                &lt;h2&gt;把每个结论写成可复核的句子&lt;/h2&gt;
+                &lt;p&gt;对我有用的审查格式是：触发输入、实际执行路径、错误结果、影响范围、验证方式。仅仅写“这里可能有竞态”还不够；需要说明哪两个动作交错、哪个状态被覆盖，以及为什么现有锁或事务拦不住。&lt;/p&gt;
+                &lt;p&gt;记录中区分了实际复现、代码路径确认和环境未完成的检查。例如依赖审计遇到注册表服务错误，就没有把依赖是否安全当成已经验证的结论。文章保留这种边界，比把所有检查都写成通过更有价值。&lt;/p&gt;
+            </content:encoded>
+      <category>协作手记</category>
+      <category>Codex</category>
+      <category>代码审查</category>
+      <category>测试</category>
+    </item>
+    <item>
+      <title>资源调研里，链接、说明和实测分别能证明什么</title>
+      <link>http://localhost:4173/posts/evidence-chain/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/evidence-chain/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>整理资源项目时，我更关心一项结论是从哪里来的。官方文档、仓库实现和本机实验各有证明范围，不能互相替代。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;我曾让 Codex 对一个资源研究项目做整体总结。能读取到的任务摘要说明了项目梳理范围，但没有逐条保留资源验证过程。因此，这篇记录方法，不把没有证据的推荐写成实测结果。&lt;/p&gt;
+                &lt;h2&gt;把每项结论绑到具体来源&lt;/h2&gt;
+                &lt;p&gt;“支持某功能”可能只是 README 的声明；“可以安装”可能只代表依赖安装成功；“当前环境能完成目标任务”才需要实际输入与输出。报告里应该保留这三种状态，让读者知道自己还需要验证什么。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
+  &quot;capability&quot;: &quot;offline inference&quot;,
+  &quot;documentation&quot;: &quot;declared&quot;,
+  &quot;sourceInspection&quot;: &quot;partial&quot;,
+  &quot;runtimeTest&quot;: &quot;not-run&quot;,
+  &quot;version&quot;: &quot;pinned-for-review&quot;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;h2&gt;许可证和运行条件一起记录&lt;/h2&gt;
+                &lt;p&gt;仓库开源不意味着模型权重、示例媒体和托管服务采用同一条款。版本、运行平台、硬件条件、依赖来源和已知失效条件也会影响结论。尤其是免费额度、在线服务权益和模型可用性，不能把旧截图当作当前保证。&lt;/p&gt;
+                &lt;h2&gt;让“不确定”成为可执行的下一步&lt;/h2&gt;
+                &lt;p&gt;不要只写“有待确认”。写清是缺少模型权重、目标平台没有安装环境，还是上游文档与实现不一致。下一次继续调研时，就能直接补上那项证据，不必再重复收集链接。&lt;/p&gt;
+            </content:encoded>
+      <category>方法论</category>
+      <category>技术调研</category>
+      <category>开源</category>
+      <category>证据</category>
+    </item>
+    <item>
+      <title>Excel 导出为什么出现了内部枚举：修复应放在哪一层</title>
+      <link>http://localhost:4173/posts/export-enum-contract/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/export-enum-contract/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>后台显示“校内 / 校外”，下载的模板却是 SCHOOL、MAJOR、DISTRICT。问题在导出表达，贸然改公共查询会影响另一个使用者。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这次导出问题并不难描述：页面里的组织类型已经合并为“校内 / 校外”，Excel 模板还在展示七种内部层级编码。难点是选对修复位置。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;根据 Claude Code 的真实实现记录整理。真实组织、账号、提交和部署环境已移除，枚举只保留与问题有关的技术含义。&lt;/p&gt;
+                &lt;h2&gt;先追到单元格是在哪里写出来的&lt;/h2&gt;
+                &lt;p&gt;生成模板的方法直接把查询结果的 &lt;code&gt;deptType&lt;/code&gt; 写进单元格。这个字段来自内部组织层级，页面上看到的两类归属则经过了业务映射。文件格式正确、SQL 也返回正确数据，但导出给用户的语义不对。&lt;/p&gt;
+                &lt;p&gt;如果第一反应是把 SQL 的字段统一改成中文，另一个使用这条查询的注册接口就会失去原始类型，进而影响校内外筛选。共享数据读取和某个具体出口的展示，是两个需要分别确认的边界。&lt;/p&gt;
+                &lt;h2&gt;在导出边界做明确转换&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;String labelForExport(DeptType type) {
+    return switch (type) {
+        case SCHOOL, MAJOR, CLASS -&amp;gt; &quot;校内&quot;;
+        case DISTRICT, STREET, COMMUNITY, ORGANIZATION -&amp;gt; &quot;校外&quot;;
+    };
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;示例刻意使用穷举的枚举分支，让新增类型时编译器提醒补齐规则。原实现还按既有业务约定处理了未知类型；在新系统里，是否兜底、是否标记待确认，需要根据业务决定，不能把任意脏数据静默当作正常分类。&lt;/p&gt;
+                &lt;h2&gt;测试应该读回最终文件&lt;/h2&gt;
+                &lt;p&gt;单测只调用映射函数，能证明映射正确，却无法证明模板真的调用了它。因此原任务新增的测试会实际生成工作簿，再读回“组织类型”单元格，覆盖所有已知类型和既定兜底分支。&lt;/p&gt;
+                &lt;p&gt;这类测试还能发现列索引移动、标题调整、类型写错等出口问题。与此同时，保留接口层测试，确认共享查询仍然输出原始编码。&lt;/p&gt;
+                &lt;h2&gt;结果与边界&lt;/h2&gt;
+                &lt;p&gt;记录中有 Maven 验证通过，以及测试环境实际导出前后对比。修复发生在模板生成处，没有改动共享 SQL。这个例子留下的判断很实用：用户看到的字段不对，先定位最终展示边界，再决定是否需要改变整个数据契约。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>Java</category>
+      <category>Excel</category>
+      <category>Claude Code</category>
+      <category>数据契约</category>
+    </item>
+    <item>
+      <title>博客封面整理：裁切、压缩与原始信息</title>
+      <link>http://localhost:4173/posts/image-boundaries/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/image-boundaries/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>同一张插画可以适配不同容器，但重复裁切不会创造新的视觉内容。整理封面时，需要同时看构图、格式和最终渲染。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;本站之前的多张文章封面，实际上是同一张背景的不同裁切。它们解决了比例适配，却没有解决内容重复。这让我重新区分了素材制作里的几件事。&lt;/p&gt;
+                &lt;h2&gt;先选构图，再决定尺寸&lt;/h2&gt;
+                &lt;p&gt;横幅、文章列表和手机首屏需要不同的视觉重心。人物的脸、手部和关键物件要留在可见区域，不能只按图片中心做机械裁切。用 &lt;code&gt;object-fit: cover&lt;/code&gt; 时尤其需要检查最终容器，而不仅是原图。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.post-cover {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+}
+.post-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;h2&gt;格式负责体积，不能恢复丢失内容&lt;/h2&gt;
+                &lt;p&gt;照片和完整插画可以比较 JPEG、WebP 或 AVIF 的视觉质量与体积；透明立绘则要保留 alpha 通道。重采样会改变像素，压缩会舍弃部分信息，生成式补图更是新增推测内容，三者不能都叫“恢复原图”。&lt;/p&gt;
+                &lt;h2&gt;交付检查要落在页面上&lt;/h2&gt;
+                &lt;p&gt;检查图片是否解码、是否出现黑边或锯齿、是否把同一张角色图放得过密，以及手机裁切是否还看得清主角。来源信息与编辑记录单独保留，导出的展示文件再检查元数据。&lt;/p&gt;
+                &lt;p&gt;封面最终应该帮读者建立文章记忆。图片多一点有时有帮助，但真正有用的是不同内容之间有可辨认的视觉差异。&lt;/p&gt;
+            </content:encoded>
+      <category>创作工具</category>
+      <category>图像处理</category>
+      <category>封面</category>
+      <category>素材</category>
+    </item>
+    <item>
+      <title>给学习工具接入 FSRS：先固定算法输入和本地数据</title>
+      <link>http://localhost:4173/posts/learning-system/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/learning-system/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>复习算法、SQLite、归档与同步一起进入项目时，最容易混淆的是边界。把时间和评分变成明确输入，才能让一次复习可以重放。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;在一个学习工具的开发记录里，FSRS 不是直接塞进卡片页面的一段计算。它被放进独立学习引擎，与 SQLite、本地媒体和同步协议分别建立契约。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;根据真实实现记录整理。本文保留技术选择与验证方法，不包含学习内容、用户数据或私有仓库名称。&lt;/p&gt;
+                &lt;h2&gt;为什么要把时间作为输入&lt;/h2&gt;
+                &lt;p&gt;调度结果依赖评分、上一次状态和当前时间。如果函数内部随处读取系统时间，同一条用例可能在不同机器或执行时刻得到不同结果。测试应固定时间、初始卡片和评分序列，再断言调度输出。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;type ReviewInput = {
+    cardId: string;
+    reviewedAt: string;
+    rating: &quot;again&quot; | &quot;hard&quot; | &quot;good&quot; | &quot;easy&quot;;
+};
+
+type ReviewResult = {
+    nextDueAt: string;
+    algorithmVersion: string;
+    nextState: unknown;
+};&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;这是简化契约，不是某个 FSRS 包的直接 API。真实接口还要精确定义状态结构。原任务锁定了算法依赖版本，并使用固定向量约束评分映射；前端若只提供三档评分，更需要明确它们如何映射到算法语义。&lt;/p&gt;
+                &lt;h2&gt;复习记录和新状态一起保存&lt;/h2&gt;
+                &lt;p&gt;一次复习至少产生事件记录和卡片新状态。两者应在同一个事务中落盘，避免记录写了而到期时间没更新，或到期时间变了却没有历史可以追踪。调度算法版本也应留下，方便升级后解释差异。&lt;/p&gt;
+                &lt;h2&gt;数据能读，不代表备份能恢复&lt;/h2&gt;
+                &lt;p&gt;实现记录还涉及归档路径、manifest、哈希和压缩比校验。备份验收需要在新目录恢复，并检查数据库和媒体引用是否一致。SQLite 放在独立 Worker 里有助于隔离阻塞，但这个选择本身不自动提供迁移正确性或恢复能力。&lt;/p&gt;
+                &lt;p&gt;原记录能支持这些模块已进入实现与测试，不能据此声称已经有长期用户效果数据。算法集成是否正确，和学习效果是否改善，也是两个分别验证的问题。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>SQLite</category>
+      <category>FSRS</category>
+      <category>Electron</category>
+      <category>Codex</category>
+    </item>
+    <item>
+      <title>Electron 离线化：文件都在，为什么 Worker 还是起不来</title>
+      <link>http://localhost:4173/posts/local-first-ai/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/local-first-ai/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>离线包里的 ONNX 文件可读，Worker 初始化却超时。真正需要检查的是目标 Electron 运行时中的协议、WASM 解析与消息握手。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;离线化一个 Electron 应用时，我遇到的关键反例是：模型文件能读、Worker 脚本也能响应，却无法完成实际初始化。资源存在性检查已经通过，运行链路仍然断着。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;根据真实执行记录整理。自定义协议、应用名称和资源标识已泛化；代码为用于说明验证方式的示例。&lt;/p&gt;
+                &lt;h2&gt;把“能请求”与“能执行”分开&lt;/h2&gt;
+                &lt;p&gt;后续诊断在目标 Electron 13 中比较了不同 Worker 来源：data URL 可以创建，项目自定义协议与 file URL 的目标用法却没有正常启动，表现为等待初始化结果超时。这个结论属于那次运行时和配置，不能扩展成所有 Electron 都不支持自定义协议 Worker。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;function waitForReady(worker, timeoutMs = 5000) {
+    return new Promise((resolve, reject) =&amp;gt; {
+        const cleanup = () =&amp;gt; {
+            clearTimeout(timer);
+            worker.removeEventListener(&quot;message&quot;, onMessage);
+            worker.removeEventListener(&quot;error&quot;, onError);
+        };
+        const onMessage = ({ data }) =&amp;gt; {
+            if (data?.type !== &quot;ready&quot;) return;
+            cleanup();
+            resolve(data);
+        };
+        const onError = (event) =&amp;gt; {
+            cleanup();
+            reject(new Error(event.message || &quot;Worker failed&quot;));
+        };
+        const timer = setTimeout(() =&amp;gt; {
+            cleanup();
+            worker.terminate();
+            reject(new Error(&quot;Worker initialization timed out&quot;));
+        }, timeoutMs);
+        worker.addEventListener(&quot;message&quot;, onMessage);
+        worker.addEventListener(&quot;error&quot;, onError);
+    });
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;示例要求 Worker 在依赖和模型初始化完成后主动发送 ready，而不是一进入脚本就发送。否则握手只能证明脚本开始执行，依然不能证明推理能力可用。&lt;/p&gt;
+                &lt;h2&gt;锁定 Worker 与 WASM 的版本关系&lt;/h2&gt;
+                &lt;p&gt;任务中的修复方向是由构建阶段生成同版本的内嵌 Worker 与 WASM 资源，消除运行时跨协议和相对路径依赖。这种兼容方案需要检查 CSP、资源体积和目标运行时；能升级 Electron 时，也应该评估升级后的标准加载方案。&lt;/p&gt;
+                &lt;h2&gt;离线验收还缺不了资源闭包&lt;/h2&gt;
+                &lt;p&gt;与此同时，严格审计仍发现真实缺失的原始媒体。界面启动、Worker 初始化和资源齐全必须分别报告。便携发布包还应复制到一个新的目录启动，验证路径迁移、本地存储、视频 Range 请求和外部请求处理。&lt;/p&gt;
+                &lt;p&gt;这篇复盘最重要的边界是：修好一段执行链路，并不等于整个离线产品已经完整交付。缺少媒体时，应该准确列出缺项，不能用占位文件制造完成感。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>Electron</category>
+      <category>Web Worker</category>
+      <category>WASM</category>
+      <category>Codex</category>
+    </item>
+    <item>
+      <title>字幕交付前，我会检查时间轴、换行和音画同步</title>
+      <link>http://localhost:4173/posts/media-localization/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/media-localization/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>字幕文本正确只是起点。时间轴、中文断句、字体缺失和封装结果都需要在成片里检查，不能只看编辑器里的预览。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这篇由媒体项目梳理任务延伸为一份技术检查笔记。可访问摘要没有保留完整处理过程，所以不把下面的步骤写成某次已交付视频的执行记录。&lt;/p&gt;
+                &lt;h2&gt;先确定字幕与媒体的时间基准&lt;/h2&gt;
+                &lt;p&gt;检查媒体时长、起始时间和音轨，再确认字幕是按同一版本制作的。剪掉片头、变速或替换音轨后，旧字幕可能每一条都合法，却整体偏移。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;ffprobe -v error -show_entries format=duration,start_time \
+  -show_entries stream=index,codec_type,codec_name \
+  -of json input.mp4&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;命令使用示例文件名，输出需要结合实际媒体解释。容器时长和各流时长不同并不一定是损坏，也可能来自编码延迟或时间戳处理。&lt;/p&gt;
+                &lt;h2&gt;检查的不只是错别字&lt;/h2&gt;
+                &lt;p&gt;重点抽检专有名词、数字和否定词；检查字幕是否结束过早、是否跨镜头停留过久，以及两条字幕是否意外重叠。中文换行尽量保留语义单位，避免把一个短语拆在两行。&lt;/p&gt;
+                &lt;h2&gt;从最终文件里看结果&lt;/h2&gt;
+                &lt;p&gt;软字幕要检查播放器兼容与默认轨，硬字幕要检查字体、描边和安全边距。输出后回看开头、中段、结尾和快速对话段，并验证音画同步。成片附上字幕版本、工具版本和源文件校验记录，后续修改才能找到对应输入。&lt;/p&gt;
+            </content:encoded>
+      <category>创作工具</category>
+      <category>字幕</category>
+      <category>FFmpeg</category>
+      <category>QA</category>
+    </item>
+    <item>
+      <title>二次元博客里的科技感，应该放在哪里</title>
+      <link>http://localhost:4173/posts/neon-interface/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/neon-interface/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>喜欢角色插画，也喜欢代码和工具，但这两种偏好不需要靠满屏发光边框连接。阅读界面需要自己的节奏。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;我喜欢东方 Project 的幻想感，也会关注 Neuro-sama 和 evil。博客里同时出现角色和技术文章，本来很自然；问题出在把“科技风”直接翻译成终端、霓虹和大量状态编号。&lt;/p&gt;
+                &lt;h2&gt;主视觉承担喜欢，正文承担阅读&lt;/h2&gt;
+                &lt;p&gt;插画可以有很强的角色存在感，标题和文章列表则应该留出稳定的阅读关系。进入长文后，技术内容需要清楚的段落、代码对比和足够的行距。每个区域都持续高强度表达，读者反而找不到停下来的位置。&lt;/p&gt;
+                &lt;h2&gt;科技感可以来自真实的信息组织&lt;/h2&gt;
+                &lt;p&gt;准确的日期、可用的分类、清楚的代码块、正确的搜索结果，比虚构的在线状态更符合技术博客。动效可以帮助理解页面变化，但阅读内容应该在没有动画时同样完整。&lt;/p&gt;
+                &lt;h2&gt;把视觉判断放到真实屏幕里&lt;/h2&gt;
+                &lt;p&gt;电脑上好看的长标题可能在手机变成五行；透明立绘可能与文字相撞；深色封面上的叠字可能只在某一块区域清楚。需要用真实中文文章检查，不用短占位标题替代。&lt;/p&gt;
+                &lt;p&gt;我想保留的二次元浓度，来自真实可见的角色、场景和个人选择。它不要求把所有按钮都做成游戏界面，也不要求文章正文跟着图片一起发光。&lt;/p&gt;
+            </content:encoded>
+      <category>创作工具</category>
+      <category>视觉设计</category>
+      <category>二次元</category>
+      <category>前端</category>
+    </item>
+    <item>
+      <title>返回 200，却打开了另一个站点：一次 Nginx 子路径排障</title>
+      <link>http://localhost:4173/posts/nginx-spa-routing/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/nginx-spa-routing/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>子应用容器正常，访问入口却跳到另一个系统的登录页。真正的问题藏在被部署覆盖的代理规则，以及仍然新鲜的浏览器缓存里。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这次和 Claude Code 排查的是一个很容易看错的问题：子应用明明在运行，打开入口却进入了另一个系统的登录页。HTTP 状态码始终是 200，让问题看起来像前端路由出错。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;根据 2026 年 8 月的真实排障记录整理。应用名、域名、部署目录和提交标识已替换；以下配置为说明问题的缩小示例。&lt;/p&gt;
+                &lt;h2&gt;先确认 200 返回的到底是什么&lt;/h2&gt;
+                &lt;p&gt;直接访问子应用服务时，页面标题和资源都正确。经过共享代理访问时，请求拿到的却是主站的 HTML：正文标题、长度和 ETag 都与主站一致。随后主站的 JavaScript 执行登录守卫，浏览器才跳到登录页。&lt;/p&gt;
+                &lt;p&gt;这一步把两个现象分开了：服务器返回错误的应用文档，前端路由再对这份文档执行了正确的登录逻辑。只盯着 200，或者只查看地址栏最后的登录地址，都会错过第一个错误。&lt;/p&gt;
+                &lt;h2&gt;消失的规则来自一次正常部署&lt;/h2&gt;
+                &lt;p&gt;服务器上的子路径 location 已经不在了。部署脚本会把仓库里的 Nginx 配置完整覆盖到服务器，而上一次子路径接入只修改了服务器文件。下一次主站部署时，那次手工修复自然被覆盖。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-nginx&quot;&gt;location = /lab {
+    return 308 /lab/;
+}
+
+location /lab/ {
+    proxy_pass http://127.0.0.1:8090/;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;这里 proxy_pass 尾部的斜杠会去掉匹配到的 &lt;code&gt;/lab/&lt;/code&gt; 前缀。这个写法只适用于上游按根路径提供资源的情况；如果上游本身部署在同名子路径，转发策略要一起调整。前端构建的资源 base 和路由 base 也必须对应。&lt;/p&gt;
+                &lt;p&gt;修复落进了部署实际使用的仓库配置，并进入同一套 &lt;code&gt;nginx -t&lt;/code&gt; 校验。这样配置与发布流程具有同一个来源，后续部署才能重现这次修复。&lt;/p&gt;
+                &lt;h2&gt;服务恢复了，浏览器为什么还没恢复&lt;/h2&gt;
+                &lt;p&gt;代理修好后，命令行拿到正确页面，原浏览器仍旧进入登录页。起初怀疑 Service Worker，但所谓的 &lt;code&gt;sw.js&lt;/code&gt; 请求返回 &lt;code&gt;text/html&lt;/code&gt;，只是 SPA 的兜底页面；前端也没有注册 Worker 的代码。这条假设因此被排除。&lt;/p&gt;
+                &lt;p&gt;剩下的证据指向 HTTP 缓存：旧 HTML 有 Last-Modified 和 ETag，却没有明确的 Cache-Control。浏览器可以依据启发式新鲜度直接使用旧副本，连条件请求都不发送。带新查询参数的入口、禁用缓存后重载，是区分缓存与服务器响应的便捷办法。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-http&quot;&gt;# HTML 入口：可以保存，但复用前需要验证
+Cache-Control: no-cache
+
+# 文件名含内容哈希的静态资源
+Cache-Control: public, max-age=31536000, immutable&lt;/code&gt;&lt;/pre&gt;
+                &lt;h2&gt;这次验证覆盖到哪里&lt;/h2&gt;
+                &lt;p&gt;记录中确认了代理入口返回目标应用、脚本与模型资源正常响应，共享代理上的其他入口也经过检查。缓存问题的判断有响应头和不同客户端行为支持；文章里的缓存头是归纳出的配置建议，不把它写成当时已经部署的结果。&lt;/p&gt;
+                &lt;blockquote&gt;下一次看到“200 但页面不对”，先比较响应正文、Content-Type 和入口归属，再排查前端路由。&lt;/blockquote&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>Nginx</category>
+      <category>SPA</category>
+      <category>Claude Code</category>
+      <category>缓存</category>
+    </item>
+    <item>
+      <title>写真实复盘时，我会删掉什么、保留什么</title>
+      <link>http://localhost:4173/posts/privacy-by-default/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/privacy-by-default/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>把名字、域名和路径替换掉，不等于把问题背景和判断过程一起删除。好的脱敏让技术过程仍然成立。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;上一版内容整理犯了一个错误：为了脱敏，把具体经历一并抹掉，最后每篇都像相同的原则清单。这次我把“会暴露身份的细节”和“解释问题所必需的事实”分开处理。&lt;/p&gt;
+                &lt;h2&gt;先抽取问题，再处理标识&lt;/h2&gt;
+                &lt;p&gt;我会保留应用类型、可观察症状、已排除的假设、真正原因、修复位置和验证范围。项目代号改为应用角色，真实账号改为设备 A 或测试用户，路径只保留与技术解释有关的相对结构。&lt;/p&gt;
+                &lt;p&gt;例如，一篇同步文章需要保留两台设备的操作顺序，却不需要它们的机器名；一篇代理排障需要说明主站和子应用共用入口，却不需要域名；数据库文章需要说明结构差异，却不需要数据库名和生产摘要。&lt;/p&gt;
+                &lt;h2&gt;示例重写，但不能把结果重写&lt;/h2&gt;
+                &lt;p&gt;代码可以缩小成最少几行，并明确标注为重建示例。原任务没做的部署、未通过的测试、尚未取得的资源，不能因为文章需要一个漂亮结尾就写成完成。来源只有摘要时，也不把摘要中没有的排查步骤包装成当时发生过的事实。&lt;/p&gt;
+                &lt;h2&gt;发布前再看一遍出口&lt;/h2&gt;
+                &lt;p&gt;正文之外，代码块、链接地址、图片元数据、alt 文本和附件同样可能带出标识。自动扫描可以发现邮箱、路径和常见凭据模式，最终仍需要逐段检查语义，避免几个普通字段组合后重新指向具体对象。&lt;/p&gt;
+                &lt;p&gt;我的目标是留下可以复用的个人经验。读者应该看得出我碰到了什么、哪里判断错了、后来怎么确认，而不是读完只记得“注意安全”。&lt;/p&gt;
+            </content:encoded>
+      <category>协作手记</category>
+      <category>写作</category>
+      <category>隐私</category>
+      <category>复盘</category>
+    </item>
+    <item>
+      <title>重做博客之前，我先承认上一版做错了什么</title>
+      <link>http://localhost:4173/posts/rebuild-log/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/rebuild-log/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>我想要的是有角色、有阅读感的个人博客，上一版却堆了信号站术语、重复裁切和空泛文章。这次先把内容和真实素材找回来。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这次重做起于一句直接的反馈：页面不好看，也没有实现原来的需求。回看上一轮，我想要的二次元个人博客，被写成了一座到处都有编号、英文状态和装饰边框的“信号站”。&lt;/p&gt;
+                &lt;h2&gt;图片数量并不等于视觉内容&lt;/h2&gt;
+                &lt;p&gt;旧版本有多张封面文件，但它们大多来自同一张背景的不同裁切。第一次渲染里，部分文章卡甚至没有用到数据中的 cover 字段。文件存在和读者看到图片，是两件必须分别检查的事。&lt;/p&gt;
+                &lt;p&gt;角色和场景需要真正出现在页面里。裁切应该服务于构图和屏幕比例，不能把一张图切成几份以后，就当作内容变丰富了。&lt;/p&gt;
+                &lt;h2&gt;更严重的问题是文章&lt;/h2&gt;
+                &lt;p&gt;上一版把“对话脱敏”处理成了删除具体经历，最后只剩原则清单。一篇标着七八分钟的文章，正文却只有几段。它还因为仓库没有聊天导出，就写成没有真实对话可用；实际上本地任务和 Claude Code 记录里有可核实的技术过程。&lt;/p&gt;
+                &lt;p&gt;新整理的复盘保留了真实的问题：代理返回了别的应用、Push 游标跳过其他设备的变更、SQL 转储哈希误判、调度抖动错过当天任务。项目名称和设备信息被替换，但错误、转折和验证边界保留下来。&lt;/p&gt;
+                &lt;h2&gt;以后怎么判断一次改版是否完成&lt;/h2&gt;
+                &lt;p&gt;先看实际页面，再看实现说明：移动端能不能完整看到标题；封面是否真的加载；进入文章后能不能专心阅读；搜索结果是否对应正文主题；旧链接是否还到得了内容。关于本站的文字也应该说人话，不再用一套虚构的终端术语代替个人表达。&lt;/p&gt;
+                &lt;blockquote&gt;我希望这里像一个长期使用的个人博客：有喜欢的角色，也有值得回来再看一次的技术笔记。&lt;/blockquote&gt;
+            </content:encoded>
+      <category>站点日志</category>
+      <category>博客</category>
+      <category>重构</category>
+      <category>二次元</category>
+    </item>
+    <item>
+      <title>做回测面板前，先把每条曲线的口径写清楚</title>
+      <link>http://localhost:4173/posts/research-dashboard/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/research-dashboard/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>任务摘要能说明做过架构梳理，却不能证明某条策略有效。这里整理回测图表应携带的成本、样本与数据质量信息。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;我曾让 Codex 汇总一个数据研究项目的架构、模块和知识库。当前可核实的来源是任务摘要，没有足够证据公开任何策略收益或实测表现，因此这里记录面板设计需要的技术口径。&lt;/p&gt;
+                &lt;h2&gt;把数据窗口和成本一起保存&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
+  &quot;datasetVersion&quot;: &quot;sample-v1&quot;,
+  &quot;timeZone&quot;: &quot;UTC&quot;,
+  &quot;feesIncluded&quot;: true,
+  &quot;slippageModel&quot;: &quot;fixed-basis-points&quot;,
+  &quot;missingDataPolicy&quot;: &quot;fail&quot;,
+  &quot;executionMode&quot;: &quot;backtest&quot;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;这是示例元数据。实际回测还需要说明样本筛选、复权、停牌与退市处理、成交约束，以及是否使用了未来才能知道的信息。省略这些条件，曲线相同也未必是在比较同一件事。&lt;/p&gt;
+                &lt;h2&gt;让异常样本有位置&lt;/h2&gt;
+                &lt;p&gt;面板应同时显示净值、回撤、成本、成交数量和数据断点，并能定位异常区间。回测、模拟执行和真实执行的指标分开保存，避免用户在同一条线上误解证据来源。&lt;/p&gt;
+                &lt;h2&gt;先让实验能复算&lt;/h2&gt;
+                &lt;p&gt;锁定数据版本、参数和代码版本，保存随机种子与运行配置。结果变化时，才能判断来自数据更新、实现修正还是参数调整。比起加更多漂亮图表，我更希望每一张图都有能查回去的生成条件。&lt;/p&gt;
+            </content:encoded>
+      <category>方法论</category>
+      <category>数据研究</category>
+      <category>回测</category>
+      <category>可视化</category>
+    </item>
+    <item>
+      <title>加了五分钟随机抖动，定时任务却跳到了明天</title>
+      <link>http://localhost:4173/posts/scheduler-jitter/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/scheduler-jitter/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>调度器同时过滤基准时间和抖动后的执行时间，在两者之间形成了一个被跳过的窗口。测试全绿，也可能漏掉这一类时间边界。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;一次只读代码审查发现，调度器为了给固定时刻加入随机抖动，同时检查了基准时间和最终执行时间是否在当前时间之后。看似更严谨的条件，恰好跳过了本该执行的候选。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;根据 Codex 实际审查结论整理。原任务只验证问题，没有修改业务代码；下方修正和测试输入是本文的缩小示例。&lt;/p&gt;
+                &lt;h2&gt;错误条件如何吞掉今天的任务&lt;/h2&gt;
+                &lt;p&gt;假设今天的基准时间是 10:00，随机偏移是 +3 分钟，所以实际执行时间为 10:03。当系统在 10:01 计算下一次触发时，这个任务仍在未来，应当被选中。但 &lt;code&gt;baseMs &amp;gt; afterMs&lt;/code&gt; 已经不成立，算法于是考虑下一天。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;// baseMs = 10:00, candidateMs = 10:03, afterMs = 10:01
+if (baseMs &amp;gt; afterMs &amp;amp;&amp;amp; candidateMs &amp;gt; afterMs) {
+    return candidateMs;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;最终是否在未来，应该由真正的候选执行时间决定。不过仅仅删去前半个条件还不够：候选集合也必须覆盖那些基准时间已过去、但正抖动尚未到达的情况。跨日的负抖动则需要检查下一天的基准候选。&lt;/p&gt;
+                &lt;h2&gt;把随机数变成可以重放的输入&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;function candidateAfter(baseMs, jitterMs, afterMs) {
+    const candidate = baseMs + jitterMs;
+    return candidate &amp;gt; afterMs ? candidate : null;
+}
+
+const minute = 60_000;
+const ten = Date.UTC(2026, 0, 1, 10);
+console.assert(candidateAfter(ten, 3 * minute,
+    ten + minute) === ten + 3 * minute);&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;测试时直接注入偏移量，生产时再由独立策略生成。一次调度候选的抖动应当稳定，否则每次刷新状态都重新抽签，任务时间会来回变化。&lt;/p&gt;
+                &lt;h2&gt;除了整点，还需要测试什么&lt;/h2&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;当前时间位于基准时间与候选时间之间。&lt;/li&gt;
+                    &lt;li&gt;当前时间恰好等于候选时间，明确是否允许立即执行。&lt;/li&gt;
+                    &lt;li&gt;正负抖动跨过午夜，或者跨过星期边界。&lt;/li&gt;
+                    &lt;li&gt;带时区的日历任务经过夏令时切换。&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;p&gt;审查记录报告已实际复现跳过当天触发的问题，同一轮现有测试仍全部通过。这不是测试没有价值，而是测试样本没有包含这个具体窗口。修复时应把窗口本身固化成回归输入。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>定时任务</category>
+      <category>边界测试</category>
+      <category>Codex</category>
+      <category>JavaScript</category>
+    </item>
+    <item>
+      <title>数据库发布被拦住：SQL 文件哈希为什么不是结构指纹</title>
+      <link>http://localhost:4173/posts/schema-fingerprint/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/schema-fingerprint/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>一次正常的基线重新导出让生产发布持续失败。排查发现，守卫混淆了文件变化与结构变化，基线记录又只在首次建库时写入。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这次发布失败不是一句“哈希不一致”就能解释的。Claude Code 的排查记录里，发布守卫比较的是 SQL 转储文件的 SHA-256，而开发规范又要求每次数据库变化后重新导出基线。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;根据真实数据库发布排障整理。表名、版本号、环境名称和摘要值已省略；SQL 只展示结构抽取的一个局部。&lt;/p&gt;
+                &lt;h2&gt;文件字节变了，不等于数据库结构变了&lt;/h2&gt;
+                &lt;p&gt;转储可能因为 AUTO_INCREMENT、导出顺序或工具生成内容不同而改变字节。对整个文件求哈希，回答的是“这两个文件是否逐字节相同”，不是“两个数据库能否运行同一版本的应用”。&lt;/p&gt;
+                &lt;p&gt;这次任务确实也包含一条未应用的结构迁移，因此不能靠放宽守卫直接通行。需要把真实结构差异和无害导出差异分开，再决定是否允许发布。&lt;/p&gt;
+                &lt;h2&gt;对需要保持一致的结构建立确定表示&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-sql&quot;&gt;SELECT table_name, ordinal_position, column_name,
+       column_type, is_nullable, column_default,
+       extra, generation_expression, collation_name
+FROM information_schema.columns
+WHERE table_schema = DATABASE()
+ORDER BY table_name, ordinal_position;&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;上面只是列定义的一部分。真实的结构指纹还要覆盖表引擎、字符集、索引、约束、外键、触发器等项目需要的对象，固定排序与 NULL 编码后再计算摘要。不要直接对随机顺序的查询输出求哈希，也不要把行数、基数、更新时间这种运行状态混入判据。&lt;/p&gt;
+                &lt;p&gt;原任务采用了目标初始化库和运行库分别计算结构指纹的办法。数据库版本和会话参数也要一致，否则不同版本对默认值或表达式的格式化差异会带来新的误报。&lt;/p&gt;
+                &lt;h2&gt;第二个错误藏在基线记录里&lt;/h2&gt;
+                &lt;p&gt;旧记录只在首次建库时写入，迁移和发布成功后不推进。结果是数据库已经向前走，守卫却一直拿初始化时的值比较。新的流程在成功发布后记录目标基线，并用临时文件替换的方式避免留下半写入状态。&lt;/p&gt;
+                &lt;h2&gt;检查放在什么时候，同样影响可靠性&lt;/h2&gt;
+                &lt;p&gt;原守卫在重建数据库容器之后才执行，拒绝发布本身也引起了服务变更。改动把可以只读完成的检查前置，在真正变更运行状态前发现不一致，并在变更后再次校验结构。&lt;/p&gt;
+                &lt;p&gt;前置检查防止明显不满足条件的发布产生副作用，后置检查确认实际运行状态与发布目标一致，两者回答不同的问题。&lt;/p&gt;
+                &lt;h2&gt;已知的验证范围&lt;/h2&gt;
+                &lt;p&gt;记录中有 Shell 契约检查、ShellCheck 和 MySQL 8.0 上重复计算得到一致指纹的结果。这个证据支持 SQL 可执行且在该环境里稳定；不能由此推断跨 MySQL 大版本、所有存储过程或任意字符集组合都已经覆盖。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>MySQL</category>
+      <category>数据库迁移</category>
+      <category>Claude Code</category>
+      <category>发布</category>
+    </item>
+    <item>
+      <title>Push 成功后，为什么另一台设备的记录消失了</title>
+      <link>http://localhost:4173/posts/sync-cursor-boundary/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/sync-cursor-boundary/index.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 GMT</pubDate>
+      <description>把 Push 响应里的服务端游标直接保存为 Pull 游标，会跳过尚未拉取的其他设备变更。写入确认与读取进度，需要表达不同的事实。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;在一个本地优先学习工具的同步实现中，Codex 记录了一处会漏同步的缺陷：客户端提交本地修改成功后，直接用响应里的服务端游标覆盖本地 Pull 游标。&lt;/p&gt;
+                &lt;p class=&quot;privacy-inline&quot;&gt;根据真实实现记录整理。下面的设备名称、序号和代码是为了展示状态变化而重建的最小示例，不是用户数据。&lt;/p&gt;
+                &lt;h2&gt;用三个序号就能复现这个错误&lt;/h2&gt;
+                &lt;ol&gt;
+                    &lt;li&gt;设备 A 已拉取到服务端变更 10，因此本地 Pull 游标为 10。&lt;/li&gt;
+                    &lt;li&gt;设备 B 提交了一条修改，服务端产生变更 11。&lt;/li&gt;
+                    &lt;li&gt;设备 A 提交本地修改，服务端产生变更 12，Push 响应返回服务端当前序号 12。&lt;/li&gt;
+                    &lt;li&gt;A 把 Pull 游标设为 12，下次只请求 12 之后的修改，于是永远错过 B 的变更 11。&lt;/li&gt;
+                &lt;/ol&gt;
+                &lt;p&gt;Push 成功只证明自己的修改被接受，无法证明 10 到 12 之间的所有变化都已经应用到本地。游标都是数字，并不意味着它们有相同语义。&lt;/p&gt;
+                &lt;h2&gt;让状态字段各自说清一件事&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const receipt = await api.push(pendingChanges);
+await markAcknowledged(receipt.acceptedIds);
+
+const page = await api.pull({ after: state.pullCursor });
+await database.transaction(async () =&amp;gt; {
+    await applyRemoteChanges(page.changes);
+    await savePullCursor(page.nextCursor);
+});&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;示例中的 Push 确认只清理已确认的待提交项。Pull 游标只能由一次成功应用的 Pull 批次推进，并与该批次的数据变更一起提交。若数据写入失败，游标也必须回滚；否则下一次重试同样会跳过数据。&lt;/p&gt;
+                &lt;h2&gt;回归测试要包含两台设备&lt;/h2&gt;
+                &lt;p&gt;只测试“修改、上传、收到成功”很难发现这个问题。需要固定服务端变更顺序，让 A 拉取后暂停，B 上传，再让 A 上传并拉取。断言重点是 A 最终包含 B 的修改，以及重复 Pull 不会重复生成记录。&lt;/p&gt;
+                &lt;p&gt;还应检查分页中断、上传重试、删除标记、账号切换。尤其是游标要绑定账号和数据集，不能把上一个账号的读取位置带给下一个账号。&lt;/p&gt;
+                &lt;h2&gt;验证边界&lt;/h2&gt;
+                &lt;p&gt;原任务记录明确指出并修正了 Push 游标覆盖 Pull 游标的问题。本篇提炼的是这个确定的语义错误；它没有证明系统的冲突合并、离线删除或所有异常恢复已经完整正确，这些仍需要各自的测试证据。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>数据同步</category>
+      <category>SQLite</category>
+      <category>Codex</category>
+      <category>游标</category>
+    </item>
+    <item>
+      <title>Java 三层架构：从一个用户查询理解职责边界</title>
+      <link>http://localhost:4173/posts/java-layers/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/java-layers/index.html</guid>
+      <pubDate>Sat, 24 May 2025 00:00:00 GMT</pubDate>
+      <description>Controller、Service、Repository 的区别不在文件夹名称，而在它们各自处理什么变化。用一个查询用例把输入、规则与存储分开。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这是旧站 Java 主题的重新整理。三层架构的价值，是让 HTTP、业务规则和数据存储各自变化时，不必一起修改整个调用链。&lt;/p&gt;
+                &lt;h2&gt;先看一个有真实职责的查询&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@GetMapping(&quot;/users/{id}&quot;)
+public UserView getUser(@PathVariable long id) {
+    return userService.getVisibleUser(id);
+}
+
+public UserView getVisibleUser(long id) {
+    User user = userRepository.findById(id)
+        .orElseThrow(UserNotFoundException::new);
+    visibilityPolicy.check(user);
+    return UserView.from(user);
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;Controller 负责输入和 HTTP 出口；Service 组合“查询可见用户”这个用例；Repository 负责持久化细节。示例省略了构造器和类声明，异常到 HTTP 状态码的映射可以由统一异常处理器完成。&lt;/p&gt;
+                &lt;h2&gt;边界不是多放几个空壳类&lt;/h2&gt;
+                &lt;p&gt;如果 Service 只把参数原样转交给 Repository，它可能暂时只是一个很薄的用例入口。这并不意味着必须人为加复杂度。真正重要的是业务规则出现后有明确归属，而不是让 Controller 直接执行数据库查询和权限判断。&lt;/p&gt;
+                &lt;h2&gt;返回值和事务也要选择边界&lt;/h2&gt;
+                &lt;p&gt;不要直接把数据库实体当作所有 API 的返回契约，尤其是实体包含敏感字段或懒加载关系时。多个写操作必须一起成功的用例，通常在 Service 处确定事务范围；只给每个 Repository 方法单独开事务，不能保证整个用例原子完成。&lt;/p&gt;
+                &lt;h2&gt;测试怎么分工&lt;/h2&gt;
+                &lt;p&gt;Service 测规则和结果，Repository 测真实查询与数据库约束，Controller 测请求绑定和错误响应。不要让三层都重复同一个“返回非空”断言；各层测试应该证明自己的责任。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>Java</category>
+      <category>架构</category>
+      <category>入门</category>
+    </item>
+    <item>
+      <title>Hello World，给自己的好奇心留一个地方</title>
+      <link>http://localhost:4173/posts/hello-world/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/hello-world/index.html</guid>
+      <pubDate>Fri, 28 Mar 2025 00:00:00 GMT</pubDate>
+      <description>代码、角色、创作工具，还有和 AI 一起反复排查的过程。这里继续记录我正在做、正在学，也仍然没弄明白的事。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这里是我的个人博客。会写代码，也会折腾自己喜欢的工具和视觉效果；喜欢二次元，也希望技术文章有真实的问题和过程。&lt;/p&gt;
+                &lt;p&gt;旧站留下了一些 Java、Unity、Live2D 和素材整理的主题。这次重新编排时，我把它们留下来，也加入了和 Codex、Claude Code 协作时碰到的工程问题。&lt;/p&gt;
+                &lt;p&gt;有些文章来自完整的执行记录，有些只能追溯到任务摘要，还有一些是基础技术整理。来源和已知边界会在正文里说明，示例会替换敏感标识，但不会为了显得顺利而删掉失败的判断。&lt;/p&gt;
+                &lt;p&gt;不预设更新频率。遇到一个值得再次解释的问题，或者做出一个想留下来的东西，就在这里继续写。&lt;/p&gt;
+            </content:encoded>
+      <category>站点日志</category>
+      <category>博客</category>
+      <category>Hexo</category>
+      <category>日常</category>
+    </item>
+    <item>
+      <title>Unity Mod 的第一步：确认运行时，再选择工具</title>
+      <link>http://localhost:4173/posts/unity-mod/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/unity-mod/index.html</guid>
+      <pubDate>Tue, 01 Oct 2024 00:00:00 GMT</pubDate>
+      <description>面对一个 Unity 项目，先判断 Mono 还是 IL2CPP，记录版本、加载方式与日志，再做一个可以单独禁用的最小改动。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这篇保留旧站的 Unity Mod 主题，重写为基础技术笔记。讨论对象是自己的项目或允许修改的本地游戏，不声称完成了某个未记录的具体 Mod。&lt;/p&gt;
+                &lt;h2&gt;先判断脚本后端&lt;/h2&gt;
+                &lt;p&gt;Mono 构建常见 Managed 程序集；IL2CPP 构建则常见原生代码和元数据。Windows 上的 GameAssembly.dll 可以作为 IL2CPP 线索，但目录特征只是初步判断，需要结合构建版本和目标平台确认。&lt;/p&gt;
+                &lt;p&gt;后端不同，插件加载器、调试方式和互操作成本就会不同。不要仅凭“都是 Unity”就套用同一套程序集补丁方法。&lt;/p&gt;
+                &lt;h2&gt;让第一个改动足够小&lt;/h2&gt;
+                &lt;p&gt;先做一次独立日志输出或一个自有界面元素的替换，确认加载时机。记录 Unity 版本、运行架构、加载器版本和日志位置。这样报错时可以先判断插件根本没加载，还是已经执行到具体逻辑。&lt;/p&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;experiment/
+  manifest.json
+  plugin/
+  notes.md
+  checksums.txt&lt;/code&gt;&lt;/pre&gt;
+                &lt;h2&gt;回退是实验的一部分&lt;/h2&gt;
+                &lt;p&gt;尽量把改动放在独立插件目录。每次记录改了什么、预期看到什么、禁用后如何恢复基线。验证时分别运行原版、启用单个插件和禁用插件，避免把已有问题误归因于当前实验。&lt;/p&gt;
+                &lt;p&gt;涉及多人联机、资源再分发或平台限制时，需要遵守对应项目规则。技术观察和公开发布是两个不同阶段。&lt;/p&gt;
+            </content:encoded>
+      <category>工程实践</category>
+      <category>Unity</category>
+      <category>Mod</category>
+      <category>工具链</category>
+    </item>
+    <item>
+      <title>解压之前，先检查文件清单和路径</title>
+      <link>http://localhost:4173/posts/archive-safety/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/archive-safety/index.html</guid>
+      <pubDate>Sun, 29 Jan 2023 00:00:00 GMT</pubDate>
+      <description>一个合法压缩包也可能包含越界路径、异常展开体积或符号链接。先做清单检查，再把内容写进独立目录。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这是旧站压缩包主题的重新整理。压缩包是一组外部提供的路径和字节，不能因为它能被工具打开，就让里面的文件直接覆盖工作区。&lt;/p&gt;
+                &lt;h2&gt;路径要按目标平台校验&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;import path from &quot;node:path&quot;;
+
+function targetInside(root, entryName) {
+    const target = path.resolve(root, entryName);
+    const relative = path.relative(root, target);
+    if (relative === &quot;..&quot; ||
+        relative.startsWith(&quot;..&quot; + path.sep) ||
+        path.isAbsolute(relative)) {
+        throw new Error(&quot;Archive entry escapes destination&quot;);
+    }
+    return target;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;这个示例只展示解析后的目录包含关系，不能单独构成完整安全解压器。还需要拒绝不需要的绝对路径和驱动器路径，处理不同分隔符、符号链接、硬链接、大小写碰撞与目标目录已有链接。成熟归档库的限制选项应当优先使用。&lt;/p&gt;
+                &lt;h2&gt;对展开量设上限&lt;/h2&gt;
+                &lt;p&gt;不要只看压缩文件大小。限制文件数量、单个文件大小、累计展开大小和压缩比，在实际解压流中继续计数；头部声明值和真实输出都可能不可靠。遇到异常时，删除本次独立临时目录，不继续移动部分产物。&lt;/p&gt;
+                &lt;h2&gt;先验收，再进入工作区&lt;/h2&gt;
+                &lt;p&gt;列出清单，确认来源与预期内容，在新目录解压，检查结果后再移动到目标位置。恢复备份还需要应用级校验，例如数据库能否打开、manifest 是否一致、媒体引用是否完整。&lt;/p&gt;
+            </content:encoded>
+      <category>工具与安全</category>
+      <category>压缩包</category>
+      <category>路径校验</category>
+      <category>Node.js</category>
+    </item>
+    <item>
+      <title>Live2D 模型加载失败，从 model3.json 开始检查</title>
+      <link>http://localhost:4173/posts/live2d-pipeline/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/live2d-pipeline/index.html</guid>
+      <pubDate>Fri, 29 Jul 2022 00:00:00 GMT</pubDate>
+      <description>模型文件、纹理、动作和物理参数依靠入口清单关联。先检查引用关系与大小写，再判断是渲染、版本还是文件缺失。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;这是旧站 Live2D 主题的重新整理。接手一个模型时，最值得先看的文件通常是 model3.json，因为它描述了运行时需要加载哪些资源。&lt;/p&gt;
+                &lt;h2&gt;先看入口引用&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
+  &quot;Version&quot;: 3,
+  &quot;FileReferences&quot;: {
+    &quot;Moc&quot;: &quot;character.moc3&quot;,
+    &quot;Textures&quot;: [&quot;textures/texture_00.png&quot;],
+    &quot;Physics&quot;: &quot;character.physics3.json&quot;
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;这是最小结构示例，真实模型可能还有表情、动作、姿态和用户数据。逐项确认相对路径与大小写。在 Windows 上看似正常的引用，部署到区分大小写的环境后可能直接失效。&lt;/p&gt;
+                &lt;h2&gt;分开判断资源与渲染问题&lt;/h2&gt;
+                &lt;p&gt;先检查网络响应、文件格式和模型版本。请求返回 200 但正文是 SPA 入口 HTML，也会导致解析失败。资源正常后，再检查 Canvas 尺寸、WebGL 上下文、模型缩放与画面坐标，避免把模型在视野外误判成加载失败。&lt;/p&gt;
+                &lt;h2&gt;参数改变了，画面为什么没变&lt;/h2&gt;
+                &lt;p&gt;表情、动作和物理更新可能在同一帧覆盖同一个参数。调试时暂时只保留一条参数更新链，确认参数 ID、取值范围和应用顺序，再逐项恢复其他效果。&lt;/p&gt;
+                &lt;p&gt;原始工程、导出资源和运行时配置分别归档，并记录 Cubism 版本。本文说明的是通用排查路径，不把某个版本的 SDK 行为推广到全部模型。&lt;/p&gt;
+            </content:encoded>
+      <category>创作工具</category>
+      <category>Live2D</category>
+      <category>Cubism</category>
+      <category>资源</category>
+    </item>
+    <item>
+      <title>素材工作台：用清单管理图片、模型和音频</title>
+      <link>http://localhost:4173/posts/asset-workbench/index.html</link>
+      <guid isPermaLink="true">http://localhost:4173/posts/asset-workbench/index.html</guid>
+      <pubDate>Mon, 24 Jan 2022 00:00:00 GMT</pubDate>
+      <description>文件名只能说明它叫什么，不能说明它从哪里来、编辑过什么、能用在哪里。给素材一个轻量清单，比不断新增文件夹更可靠。</description>
+      <content:encoded>
+                &lt;p class=&quot;lead&quot;&gt;旧站的素材整理主题，在这次重写中保留为一份工作方法。图片、模型和音频一旦多起来，最先失控的通常是来源、版本和“哪个才是最终文件”。&lt;/p&gt;
+                &lt;h2&gt;清单只记录能帮助下一次选择的信息&lt;/h2&gt;
+                &lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
+  &quot;id&quot;: &quot;cover-forest-01&quot;,
+  &quot;file&quot;: &quot;covers/forest.webp&quot;,
+  &quot;source&quot;: &quot;self-created&quot;,
+  &quot;derivedFrom&quot;: &quot;originals/forest.png&quot;,
+  &quot;changes&quot;: [&quot;crop&quot;, &quot;resize&quot;, &quot;metadata-review&quot;],
+  &quot;usage&quot;: &quot;blog-cover&quot;
+}&lt;/code&gt;&lt;/pre&gt;
+                &lt;p&gt;示例素材名是虚构的。实际清单还可以记录作者、授权条件、尺寸和内容摘要。不要只把许可信息藏在一个以后可能打不开的链接里。&lt;/p&gt;
+                &lt;h2&gt;原件和派生文件分开&lt;/h2&gt;
+                &lt;p&gt;原件只读保留，裁切、压缩和导出进入派生目录。文件内容相同可以用哈希识别，但内容哈希无法判断两张视觉相似的图片是否有相同使用权，也不能代替人工选图。&lt;/p&gt;
+                &lt;h2&gt;最后检查的是使用位置&lt;/h2&gt;
+                &lt;p&gt;模型有没有丢贴图、音频有没有被截断、图片是否在小尺寸下仍然清楚，需要回到应用里验证。清单可以让来源和加工关系可追溯，最终呈现仍然取决于它被放进了什么容器。&lt;/p&gt;
+            </content:encoded>
+      <category>创作工具</category>
+      <category>CG</category>
+      <category>素材管理</category>
+      <category>工作流</category>
+    </item>
+  </channel>
+</rss>
