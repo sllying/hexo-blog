@@ -3,7 +3,7 @@
   <channel>
     <title>SLLYING</title>
     <link>http://localhost:4173/</link>
-    <description>写代码，也收藏幻想。</description>
+    <description>SLLYING 的个人博客。</description>
     <language>zh-CN</language>
     <atom:link href="http://localhost:4173/feed.xml" rel="self" type="application/rss+xml"/>
     <lastBuildDate>Tue, 08 Sep 2026 00:00:00 GMT</lastBuildDate>

@@ -74,7 +74,7 @@ export async function loadContent(root = projectRoot) {
     if (!cover?.isFile()) throw new Error(`${post.id}.cover is missing: ${post.cover}`);
   }
   data.posts.sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
-  data.site = { ...data.site, name: 'SLLYING', description: '\u5199\u4ee3\u7801\uff0c\u4e5f\u6536\u85cf\u5e7b\u60f3\u3002' };
+  data.site = { ...data.site, name: 'SLLYING', description: 'SLLYING 的个人博客。' };
   return data;
 }
 

@@ -1,15 +1,3 @@
-# Visual Assets
+# 图片资源
 
-`background.jpg` and the original avatar artwork were already present in the repository. Their original author and license were not available in the workspace, so public or commercial deployment requires a rights check.
-
-The following files are local layout derivatives created from those existing assets. They contain no EXIF records and are not external hotlinks:
-
-- `hero-wide.jpg`: desktop hero crop
-- `hero-mobile.jpg`: mobile hero crop
-- `scene-warm.jpg`: warm character crop
-- `scene-cool.jpg`: cool character crop
-- `scene-umbrellas.jpg`: wide scene crop
-- `avatar-cutout.png`: transparent avatar
-- `avatar-detail.png`: square avatar detail
-
-Touhou Project, Neuro-sama, and evil are visual mood references only. No third-party character asset was downloaded or copied as part of this refactor.
+场景图库原图、网页 WebP 和手机版本在 `generated/`，清单与记录见 [SOURCES.md](SOURCES.md)。导航与关于页使用 `neuro-chibi-avatar.webp`，浏览器使用 `neuro-chibi-favicon.png`。没有保留旧站点的第三方图片文件。

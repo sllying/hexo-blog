@@ -10,7 +10,7 @@
     const feedCards = $$('#posts-list > .post-card');
     const localFilters = feedCards.length && !document.body.dataset.filtered;
     const state = { category: 'all', page: 1 };
-    const pageSize = 6;
+    const pageSize = 8;
     let toastTimer;
     let searchTrigger;
 
@@ -82,18 +82,6 @@
         $('[data-action="menu"]').setAttribute('aria-expanded', 'false');
     }
 
-    function setScene(scene) {
-        const picture = $('#hero-picture');
-        if (!picture) return;
-        const neuro = scene === 'neuro';
-        $('source', picture).srcset = `${base}images/${neuro ? 'neuro-evil-mobile' : 'touhou-hero-mobile'}.webp`;
-        $('img', picture).src = `${base}images/${neuro ? 'neuro-evil' : 'touhou-hero'}.webp`;
-        $('img', picture).alt = neuro ? 'Neuro-sama 与 Evil 一起做饭的同人插画' : '魂魄妖梦与开满鲜花的山野，东方 Project 同人插画';
-        $('#hero-credit span').textContent = `${neuro ? 'Neuro-sama / Evil' : '东方 Project'} · 插画来源`;
-        $$('.scene-switch button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.scene === scene)));
-        try { localStorage.setItem('sllying-scene', scene); } catch { /* Preferences remain optional. */ }
-    }
-
     function filterUrl(page, category = state.category) {
         const url = new URL(location.href);
         url.searchParams.delete('post');
@@ -137,6 +125,7 @@
 
     function updateScroll() {
         $('#back-top').classList.toggle('visible', window.scrollY > 500);
+        $('.site-header').classList.toggle('scrolled', window.scrollY > 30);
         const body = $('#article-body');
         if (!body) return;
         const start = body.getBoundingClientRect().top + window.scrollY - 130;
@@ -147,7 +136,7 @@
         const headings = $$('h2[id], h3[id]', body);
         let active = headings[0]?.id;
         headings.forEach(heading => { if (heading.getBoundingClientRect().top <= 150) active = heading.id; });
-        $$('.toc-inner nav a').forEach(link => {
+        $$('.article-toc nav a').forEach(link => {
             const current = link.hash === `#${active}`;
             link.classList.toggle('active', current);
             if (current) link.setAttribute('aria-current', 'location');
@@ -156,8 +145,6 @@
     }
 
     document.addEventListener('click', event => {
-        const scene = event.target.closest('[data-scene]');
-        if (scene) setScene(scene.dataset.scene);
         const action = event.target.closest('[data-action]');
         if (action) {
             switch (action.dataset.action) {
@@ -213,7 +200,7 @@
         if (event.key === '/' && !editing) { event.preventDefault(); openSearch(); }
     });
     window.addEventListener('popstate', readLocation);
-    window.addEventListener('resize', () => { if (window.innerWidth > 640) closeMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
     let scrollScheduled = false;
     window.addEventListener('scroll', () => {
         if (scrollScheduled) return;
@@ -245,7 +232,47 @@
         if (location.hash === '#about') location.replace(`${base}about/index.html`);
     }
     readLocation();
-    try { if (localStorage.getItem('sllying-scene') === 'neuro') setScene('neuro'); } catch { /* Use the default artwork. */ }
     refreshIcons();
     updateScroll();
+
+    const landing = $('.landing');
+    if (landing) {
+        let inView = true;
+        const updateMotion = () => landing.classList.toggle('in-view', inView && !document.hidden);
+        const observer = new IntersectionObserver(entries => {
+            inView = entries[0].isIntersecting;
+            updateMotion();
+        });
+        observer.observe(landing);
+        document.addEventListener('visibilitychange', updateMotion);
+        updateMotion();
+        const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+        let frame;
+        let pointerX = 0;
+        let pointerY = 0;
+        const resetParallax = () => {
+            cancelAnimationFrame(frame);
+            frame = undefined;
+            landing.style.removeProperty('--parallax-x');
+            landing.style.removeProperty('--parallax-y');
+            landing.style.removeProperty('--tilt-x');
+            landing.style.removeProperty('--tilt-y');
+        };
+        landing.addEventListener('pointermove', event => {
+            if (event.pointerType !== 'mouse' || reducedMotion.matches || !inView) return;
+            const rect = landing.getBoundingClientRect();
+            pointerX = ((event.clientX - rect.left) / rect.width - .5) * -24;
+            pointerY = ((event.clientY - rect.top) / rect.height - .5) * -18;
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                landing.style.setProperty('--parallax-x', `${pointerX.toFixed(2)}px`);
+                landing.style.setProperty('--parallax-y', `${pointerY.toFixed(2)}px`);
+                landing.style.setProperty('--tilt-x', `${(-pointerX * .42).toFixed(2)}deg`);
+                landing.style.setProperty('--tilt-y', `${(pointerY * .3).toFixed(2)}deg`);
+                frame = undefined;
+            });
+        }, { passive: true });
+        landing.addEventListener('pointerleave', resetParallax);
+        reducedMotion.addEventListener('change', resetParallax);
+    }
 })();
