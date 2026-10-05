@@ -13,7 +13,7 @@
             tags: ["Nginx", "SPA", "Claude Code", "缓存"],
             read: "4 min",
             featured: true,
-            cover: "images/generated/neuro-evil-midnight-workbench.webp",
+            cover: "images/illustrations/neuro-evil-blue-workbench.webp",
             source: "Claude Code 排障记录",
             excerpt: "子应用容器正常，访问入口却跳到另一个系统的登录页。真正的问题藏在被部署覆盖的代理规则，以及仍然新鲜的浏览器缓存里。",
             body: `
@@ -55,7 +55,7 @@ Cache-Control: public, max-age=31536000, immutable</code></pre>
             category: "工程实践",
             tags: ["数据同步", "SQLite", "Codex", "游标"],
             read: "4 min",
-            cover: "images/generated/neuro-evil-seaside.webp",
+            cover: "images/illustrations/neuro-evil-cloudy-seaside.webp",
             source: "Codex 实现记录",
             excerpt: "把 Push 响应里的服务端游标直接保存为 Pull 游标，会跳过尚未拉取的其他设备变更。写入确认与读取进度，需要表达不同的事实。",
             body: `
@@ -95,7 +95,7 @@ await database.transaction(async () =&gt; {
             category: "工程实践",
             tags: ["MySQL", "数据库迁移", "Claude Code", "发布"],
             read: "4 min",
-            cover: "images/generated/remilia-sakuya-clocktower.webp",
+            cover: "images/illustrations/remilia-sakuya-conservatory.webp",
             source: "Claude Code 排障记录",
             excerpt: "一次正常的基线重新导出让生产发布持续失败。排查发现，守卫混淆了文件变化与结构变化，基线记录又只在首次建库时写入。",
             body: `
@@ -131,7 +131,7 @@ ORDER BY table_name, ordinal_position;</code></pre>
             category: "工程实践",
             tags: ["定时任务", "边界测试", "Codex", "JavaScript"],
             read: "4 min",
-            cover: "images/generated/remilia-sakuya-clocktower.webp",
+            cover: "images/illustrations/remilia-sakuya-conservatory.webp",
             source: "Codex 只读审查记录",
             excerpt: "调度器同时过滤基准时间和抖动后的执行时间，在两者之间形成了一个被跳过的窗口。测试全绿，也可能漏掉这一类时间边界。",
             body: `
@@ -174,7 +174,7 @@ console.assert(candidateAfter(ten, 3 * minute,
             category: "工程实践",
             tags: ["Java", "Excel", "Claude Code", "数据契约"],
             read: "3 min",
-            cover: "images/generated/reimu-marisa-autumn-library.webp",
+            cover: "images/illustrations/reimu-marisa-reading-room.webp",
             source: "Claude Code 实现记录",
             excerpt: "后台显示“校内 / 校外”，下载的模板却是 SCHOOL、MAJOR、DISTRICT。问题在导出表达，贸然改公共查询会影响另一个使用者。",
             body: `
@@ -207,7 +207,7 @@ console.assert(candidateAfter(ten, 3 * minute,
             category: "站点日志",
             tags: ["博客", "重构", "二次元"],
             read: "2 min",
-            cover: "images/generated/youmu-moonlit-lake.webp",
+            cover: "images/illustrations/gancheng-window-studio.webp",
             source: "本站改版记录",
             excerpt: "我想要的是有角色、有阅读感的个人博客，上一版却堆了信号站术语、重复裁切和空泛文章。这次先把内容和真实素材找回来。",
             body: `
@@ -232,7 +232,7 @@ console.assert(candidateAfter(ten, 3 * minute,
             category: "协作手记",
             tags: ["Codex", "代码审查", "测试"],
             read: "3 min",
-            cover: "images/generated/neuro-evil-chibi-garden.webp",
+            cover: "images/illustrations/neuro-evil-window-garden.webp",
             source: "Codex 只读审查记录",
             excerpt: "一轮实际审查里，测试、Lint 和启动检查都通过，调度窗口、状态文件和失败 Promise 仍然藏着可复现的问题。",
             body: `
@@ -268,7 +268,7 @@ function loadRuntimeConfig() {
             category: "协作手记",
             tags: ["Claude Code", "Electron", "验证"],
             read: "3 min",
-            cover: "images/generated/neuro-evil-neon-arcade.webp",
+            cover: "images/illustrations/neuro-evil-soft-arcade.webp",
             source: "Claude Code 与 Codex 对照记录",
             excerpt: "网络拦截、本地 Mock API 和大量媒体文件让静态分析得出了乐观结论，实际运行却暴露出缺失资源、错误路由和 Worker 初始化问题。",
             body: `
@@ -302,7 +302,7 @@ function loadRuntimeConfig() {
             category: "协作手记",
             tags: ["写作", "隐私", "复盘"],
             read: "2 min",
-            cover: "images/generated/reimu-youmu-winter-teahouse.webp",
+            cover: "images/illustrations/reimu-youmu-snow-window.webp",
             source: "本站内容整理方法",
             excerpt: "把名字、域名和路径替换掉，不等于把问题背景和判断过程一起删除。好的脱敏让技术过程仍然成立。",
             body: `
@@ -326,7 +326,7 @@ function loadRuntimeConfig() {
             category: "协作手记",
             tags: ["AI 工具", "工作流", "交接"],
             read: "2 min",
-            cover: "images/generated/neuro-evil-midnight-workbench.webp",
+            cover: "images/illustrations/neuro-evil-blue-workbench.webp",
             source: "多次协作记录整理",
             excerpt: "跨任务继续开发时，最有用的上下文是当前状态、未完成项和证据。堆一份很长的“已完成总结”，下一次仍然会从错误假设开始。",
             body: `
@@ -354,7 +354,7 @@ function loadRuntimeConfig() {
             category: "创作工具",
             tags: ["图像处理", "封面", "素材"],
             read: "2 min",
-            cover: "images/generated/neuro-evil-neon-arcade.webp",
+            cover: "images/illustrations/gancheng-window-studio.webp",
             source: "本站素材整理观察",
             excerpt: "同一张插画可以适配不同容器，但重复裁切不会创造新的视觉内容。整理封面时，需要同时看构图、格式和最终渲染。",
             body: `
@@ -387,7 +387,7 @@ function loadRuntimeConfig() {
             category: "创作工具",
             tags: ["视觉设计", "二次元", "前端"],
             read: "2 min",
-            cover: "images/generated/sanae-rain-city.webp",
+            cover: "images/illustrations/gancheng-evening-rooftop.webp",
             source: "本站设计复盘",
             excerpt: "喜欢角色插画，也喜欢代码和工具，但这两种偏好不需要靠满屏发光边框连接。阅读界面需要自己的节奏。",
             body: `
@@ -410,7 +410,7 @@ function loadRuntimeConfig() {
             category: "方法论",
             tags: ["技术调研", "开源", "证据"],
             read: "2 min",
-            cover: "images/generated/marisa-comet-observatory.webp",
+            cover: "images/illustrations/marisa-blue-observatory.webp",
             source: "资源研究任务摘要与方法整理",
             excerpt: "整理资源项目时，我更关心一项结论是从哪里来的。官方文档、仓库实现和本机实验各有证明范围，不能互相替代。",
             body: `
@@ -439,7 +439,7 @@ function loadRuntimeConfig() {
             category: "工程实践",
             tags: ["Electron", "Web Worker", "WASM", "Codex"],
             read: "5 min",
-            cover: "images/generated/neuro-evil-midnight-workbench.webp",
+            cover: "images/illustrations/neuro-evil-blue-workbench.webp",
             source: "Codex 运行验证记录",
             excerpt: "离线包里的 ONNX 文件可读，Worker 初始化却超时。真正需要检查的是目标 Electron 运行时中的协议、WASM 解析与消息握手。",
             body: `
@@ -489,7 +489,7 @@ function loadRuntimeConfig() {
             category: "工程实践",
             tags: ["SQLite", "FSRS", "Electron", "Codex"],
             read: "3 min",
-            cover: "images/generated/reimu-marisa-autumn-library.webp",
+            cover: "images/illustrations/reimu-marisa-reading-room.webp",
             source: "Codex 实现记录",
             excerpt: "复习算法、SQLite、归档与同步一起进入项目时，最容易混淆的是边界。把时间和评分变成明确输入，才能让一次复习可以重放。",
             body: `
@@ -525,7 +525,7 @@ type ReviewResult = {
             category: "方法论",
             tags: ["数据研究", "回测", "可视化"],
             read: "2 min",
-            cover: "images/generated/marisa-comet-observatory.webp",
+            cover: "images/illustrations/marisa-blue-observatory.webp",
             source: "研究项目摘要与技术整理",
             excerpt: "任务摘要能说明做过架构梳理，却不能证明某条策略有效。这里整理回测图表应携带的成本、样本与数据质量信息。",
             body: `
@@ -555,7 +555,7 @@ type ReviewResult = {
             category: "创作工具",
             tags: ["字幕", "FFmpeg", "QA"],
             read: "2 min",
-            cover: "images/generated/neuro-evil-seaside.webp",
+            cover: "images/illustrations/neuro-evil-cloudy-seaside.webp",
             source: "媒体项目摘要与技术整理",
             excerpt: "字幕文本正确只是起点。时间轴、中文断句、字体缺失和封装结果都需要在成片里检查，不能只看编辑器里的预览。",
             body: `
@@ -581,7 +581,7 @@ type ReviewResult = {
             category: "工程实践",
             tags: ["Java", "架构", "入门"],
             read: "3 min",
-            cover: "images/generated/reimu-youmu-winter-teahouse.webp",
+            cover: "images/illustrations/reimu-youmu-snow-window.webp",
             source: "旧站主题重编",
             excerpt: "Controller、Service、Repository 的区别不在文件夹名称，而在它们各自处理什么变化。用一个查询用例把输入、规则与存储分开。",
             body: `
@@ -616,7 +616,7 @@ public UserView getVisibleUser(long id) {
             category: "工程实践",
             tags: ["Unity", "Mod", "工具链"],
             read: "2 min",
-            cover: "images/generated/sanae-rain-city.webp",
+            cover: "images/illustrations/sanae-rain-window.webp",
             source: "旧站主题重编",
             excerpt: "面对一个 Unity 项目，先判断 Mono 还是 IL2CPP，记录版本、加载方式与日志，再做一个可以单独禁用的最小改动。",
             body: `
@@ -645,7 +645,7 @@ public UserView getVisibleUser(long id) {
             category: "创作工具",
             tags: ["Live2D", "Cubism", "资源"],
             read: "2 min",
-            cover: "images/generated/neuro-evil-neon-arcade.webp",
+            cover: "images/illustrations/neuro-evil-soft-arcade.webp",
             source: "旧站主题重编",
             excerpt: "模型文件、纹理、动作和物理参数依靠入口清单关联。先检查引用关系与大小写，再判断是渲染、版本还是文件缺失。",
             body: `
@@ -676,7 +676,7 @@ public UserView getVisibleUser(long id) {
             category: "创作工具",
             tags: ["CG", "素材管理", "工作流"],
             read: "2 min",
-            cover: "images/generated/neuro-evil-chibi-garden.webp",
+            cover: "images/illustrations/gancheng-window-studio.webp",
             source: "旧站主题重编",
             excerpt: "文件名只能说明它叫什么，不能说明它从哪里来、编辑过什么、能用在哪里。给素材一个轻量清单，比不断新增文件夹更可靠。",
             body: `
@@ -706,7 +706,7 @@ public UserView getVisibleUser(long id) {
             category: "工具与安全",
             tags: ["压缩包", "路径校验", "Node.js"],
             read: "3 min",
-            cover: "images/generated/youmu-moonlit-lake.webp",
+            cover: "images/illustrations/youmu-moonlit-terrace.webp",
             source: "旧站主题重编",
             excerpt: "一个合法压缩包也可能包含越界路径、异常展开体积或符号链接。先做清单检查，再把内容写进独立目录。",
             body: `
@@ -740,7 +740,7 @@ function targetInside(root, entryName) {
             category: "站点日志",
             tags: ["博客", "Hexo", "日常"],
             read: "1 min",
-            cover: "images/generated/neuro-evil-chibi-garden.webp",
+            cover: "images/illustrations/neuro-evil-window-garden.webp",
             source: "旧站开篇重编",
             excerpt: "代码、角色、创作工具，还有和 AI 一起反复排查的过程。这里继续记录我正在做、正在学，也仍然没弄明白的事。",
             body: `

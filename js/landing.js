@@ -154,6 +154,7 @@
         const controls = region.querySelector('.cover-controls');
         const slides = Array.from(art.querySelectorAll('.landing-slide'));
         const dots = Array.from(controls.querySelectorAll('[data-cover-index]'));
+        const dotRail = controls.querySelector('.cover-dots');
         const playButton = controls.querySelector('[data-cover="play"]');
         const status = controls.querySelector('.cover-status');
         let selected = 0;
@@ -195,6 +196,11 @@
                 slide.setAttribute('aria-hidden', String(i !== selected));
             });
             dots.forEach((dot, i) => dot.setAttribute('aria-pressed', String(i === selected)));
+            if (dotRail.scrollWidth > dotRail.clientWidth) {
+                const dot = dots[selected];
+                const left = dotRail.scrollLeft + dot.getBoundingClientRect().left - dotRail.getBoundingClientRect().left - (dotRail.clientWidth - dot.clientWidth) / 2;
+                dotRail.scrollTo({ left, behavior: motionPreference.matches ? 'instant' : 'smooth' });
+            }
             if (manual) status.textContent = `第 ${selected + 1} 张，共 ${slides.length} 张封面`;
             schedule();
         }

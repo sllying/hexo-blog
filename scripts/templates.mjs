@@ -1,4 +1,4 @@
-const VERSION = '20261003-generated-gallery';
+const VERSION = '20261005-soft-gallery';
 
 export const escapeHtml = (value = '') => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const icon = (name, className = '') => `<i data-lucide="${name}" class="${className}" aria-hidden="true"></i>`;
@@ -23,73 +23,87 @@ function header(ctx) {
 function intro(ctx) {
     const covers = [
     {
-        "image": "generated/youmu-moonlit-lake.webp",
-        "mobile": "generated/youmu-moonlit-lake-mobile.webp",
-        "alt": "妖梦 · 月夜湖畔",
-        "position": "center 35%",
+        "image": "illustrations/gancheng-window-studio-display.webp",
+        "mobile": "illustrations/gancheng-window-studio-mobile.webp",
+        "alt": "甘城 · 窗边画室",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/neuro-evil-midnight-workbench.webp",
-        "mobile": "generated/neuro-evil-midnight-workbench-mobile.webp",
-        "alt": "Neuro / Evil · 深夜工作台",
-        "position": "center 35%",
+        "image": "illustrations/neuro-evil-blue-workbench-display.webp",
+        "mobile": "illustrations/neuro-evil-blue-workbench-mobile.webp",
+        "alt": "Neuro / Evil · 蓝光工作台",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/reimu-marisa-autumn-library.webp",
-        "mobile": "generated/reimu-marisa-autumn-library-mobile.webp",
-        "alt": "灵梦与魔理沙 · 秋日书屋",
-        "position": "center 35%",
+        "image": "illustrations/youmu-moonlit-terrace-display.webp",
+        "mobile": "illustrations/youmu-moonlit-terrace-mobile.webp",
+        "alt": "妖梦 · 月夜露台",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/neuro-evil-seaside.webp",
-        "mobile": "generated/neuro-evil-seaside-mobile.webp",
-        "alt": "Neuro / Evil · 海边晚霞",
-        "position": "center 35%",
+        "image": "illustrations/gancheng-evening-rooftop-display.webp",
+        "mobile": "illustrations/gancheng-evening-rooftop-mobile.webp",
+        "alt": "甘城 · 夜色屋顶",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/marisa-comet-observatory.webp",
-        "mobile": "generated/marisa-comet-observatory-mobile.webp",
-        "alt": "魔理沙 · 彗星观测",
-        "position": "center 35%",
+        "image": "illustrations/reimu-marisa-reading-room-display.webp",
+        "mobile": "illustrations/reimu-marisa-reading-room-mobile.webp",
+        "alt": "灵梦与魔理沙 · 午后书屋",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/neuro-evil-chibi-garden.webp",
-        "mobile": "generated/neuro-evil-chibi-garden-mobile.webp",
-        "alt": "Neuro / Evil · Q版花园",
-        "position": "center 35%",
+        "image": "illustrations/neuro-evil-cloudy-seaside-display.webp",
+        "mobile": "illustrations/neuro-evil-cloudy-seaside-mobile.webp",
+        "alt": "Neuro / Evil · 海边微风",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/sanae-rain-city.webp",
-        "mobile": "generated/sanae-rain-city-mobile.webp",
-        "alt": "早苗 · 雨夜城市",
-        "position": "center 35%",
+        "image": "illustrations/marisa-blue-observatory-display.webp",
+        "mobile": "illustrations/marisa-blue-observatory-mobile.webp",
+        "alt": "魔理沙 · 蓝色观测台",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/neuro-evil-neon-arcade.webp",
-        "mobile": "generated/neuro-evil-neon-arcade-mobile.webp",
-        "alt": "Neuro / Evil · 霓虹街机房",
-        "position": "center 35%",
+        "image": "illustrations/neuro-evil-window-garden-display.webp",
+        "mobile": "illustrations/neuro-evil-window-garden-mobile.webp",
+        "alt": "Neuro / Evil · 窗台花园",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/remilia-sakuya-clocktower.webp",
-        "mobile": "generated/remilia-sakuya-clocktower-mobile.webp",
-        "alt": "蕾米莉亚与咲夜 · 钟楼",
-        "position": "center 35%",
+        "image": "illustrations/sanae-rain-window-display.webp",
+        "mobile": "illustrations/sanae-rain-window-mobile.webp",
+        "alt": "早苗 · 雨窗咖啡",
+        "position": "center",
         "mobilePosition": "center"
     },
     {
-        "image": "generated/reimu-youmu-winter-teahouse.webp",
-        "mobile": "generated/reimu-youmu-winter-teahouse-mobile.webp",
-        "alt": "灵梦与妖梦 · 冬日茶屋",
-        "position": "center 35%",
+        "image": "illustrations/neuro-evil-soft-arcade-display.webp",
+        "mobile": "illustrations/neuro-evil-soft-arcade-mobile.webp",
+        "alt": "Neuro / Evil · 夜晚街机",
+        "position": "center",
+        "mobilePosition": "center"
+    },
+    {
+        "image": "illustrations/remilia-sakuya-conservatory-display.webp",
+        "mobile": "illustrations/remilia-sakuya-conservatory-mobile.webp",
+        "alt": "蕾米莉亚与咲夜 · 温室茶歇",
+        "position": "center",
+        "mobilePosition": "center"
+    },
+    {
+        "image": "illustrations/reimu-youmu-snow-window-display.webp",
+        "mobile": "illustrations/reimu-youmu-snow-window-mobile.webp",
+        "alt": "灵梦与妖梦 · 雪窗茶屋",
+        "position": "center",
         "mobilePosition": "center"
     }
 ];
@@ -135,7 +149,7 @@ function taxonomy(ctx) {
 function about(ctx) {
     return `<main id="main-content" class="about-page page-width interior-layout">
         <div class="about-intro"><div class="page-heading"><p class="eyebrow">ABOUT</p><h1>你好，我是 SLLYING。</h1><p>一个写代码、喜欢二次元的人。</p></div><img class="about-avatar" src="${path(ctx, 'images/neuro-chibi-avatar.webp')}" alt="Neuro-sama Q 版头像" width="72" height="72"></div>
-        <div class="about-body"><section><h2>把好奇心，留在这里。</h2><p>这里记录我在工程开发、AI 工具和创作过程中的探索。喜欢东方 Project，也关注 Neuro-sama 和 Evil。闲下来的时候，常常在技术与二次元之间来回走动。</p><p>写博客是为了把“当时怎么解决的”留给以后的自己。能跑通的代码、踩过的坑、重新想明白的事情，都值得认真记一笔。</p><div class="about-interests">${['Java', 'Unity', 'Live2D', 'Codex', 'Claude Code', '东方 Project', 'Neuro-sama', 'Evil'].map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}</div></section>
+        <div class="about-body"><section><h2>把好奇心，留在这里。</h2><p>这里记录我在工程开发、AI 工具和创作过程中的探索。喜欢东方 Project，也关注 Neuro-sama、Evil 和甘城。闲下来的时候，常常在技术与二次元之间来回走动。</p><p>写博客是为了把“当时怎么解决的”留给以后的自己。能跑通的代码、踩过的坑、重新想明白的事情，都值得认真记一笔。</p><div class="about-interests">${['Java', 'Unity', 'Live2D', 'Codex', 'Claude Code', '东方 Project', 'Neuro-sama', 'Evil', '甘城'].map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}</div></section>
         <section><h2>关于这些文章</h2><p>技术复盘根据实际项目与协作记录整理，保留问题背景、排查过程和工程判断。示例中的账号、令牌、内部地址、个人路径等关键信息已替换；原始对话不会随站点发布。整理示例和历史笔记会在正文中注明。</p><a class="text-link" href="${path(ctx, 'archives/index.html')}">看看全部文章 ${icon('arrow-up-right')}</a></section>
         <div class="about-signoff"><span>SLLYING.</span><a href="${path(ctx, 'feed.xml')}">${icon('rss')} 订阅更新</a></div></div></main>`;
 }
@@ -178,7 +192,7 @@ export function renderPage(input) {
     const content = ctx.page === 'post' ? article(ctx) : ctx.page === 'archive' ? archive(ctx) : ctx.page === 'about' ? about(ctx) : ['topics', 'categories', 'tags'].includes(ctx.page) ? taxonomy(ctx) : ['notFound', '404'].includes(ctx.page) ? notFound(ctx) : home(ctx);
     const canonical = ctx.file && ctx.site?.url ? new URL(ctx.file, ctx.site.url).href : '';
     const robots = ctx.page === '404' || ctx.page === 'notFound' ? 'noindex,follow' : 'index,follow';
-    const socialImage = ctx.post?.cover || 'images/generated/youmu-moonlit-lake.webp';
+    const socialImage = ctx.post?.cover || 'images/illustrations/gancheng-window-studio.webp';
     return `<!doctype html>
 <html lang="zh-CN" data-theme="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1421"><meta name="robots" content="${robots}"><title>${title ? `${escapeHtml(title)} | ` : ''}SLLYING</title><meta name="description" content="${escapeHtml(description)}"><meta property="og:title" content="${escapeHtml(title || 'SLLYING')}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:type" content="${ctx.post ? 'article' : 'website'}"><meta property="og:image" content="${canonical ? new URL(socialImage, ctx.site.url).href : path(ctx, socialImage)}">${canonical ? `<link rel="canonical" href="${escapeHtml(canonical)}">` : ''}<link rel="icon" type="image/png" href="${path(ctx, 'images/neuro-chibi-favicon.png')}"><link rel="alternate" type="application/rss+xml" title="SLLYING RSS" href="${path(ctx, 'feed.xml')}"><link rel="stylesheet" href="${path(ctx, `css/main.css?v=${VERSION}`)}"><script>document.documentElement.classList.add('js');try{document.documentElement.dataset.theme=localStorage.getItem('sllying-theme')||'light'}catch{}</script><script defer src="${path(ctx, 'js/lib/lucide.min.js')}"></script><script defer src="${path(ctx, `js/search-index.js?v=${VERSION}`)}"></script><script defer src="${path(ctx, `js/main.js?v=${VERSION}`)}"></script>${ctx.page === 'home' && !ctx.category && !ctx.tag ? `<script defer src="${path(ctx, `js/landing.js?v=${VERSION}`)}"></script>` : ''}</head>

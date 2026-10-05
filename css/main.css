@@ -63,9 +63,9 @@ body[data-landing] .mobile-menu { background: rgba(10,18,30,.97); border-color: 
 .landing-visual { position: absolute; left: 74%; top: 50%; width: min(55.4vw,80svh); height: min(55.4vw,80svh); transform: translate3d(calc(-50% + var(--parallax-x,0px)),calc(-50% + var(--parallax-y,0px)),0) perspective(1000px) rotateX(var(--tilt-y,0deg)) rotateY(var(--tilt-x,0deg)); pointer-events: none; }
 .landing-visual::before { content: ''; position: absolute; inset: -9%; border-radius: 50%; background: conic-gradient(from 25deg,transparent,#91daff32,transparent,#9c79ff38,transparent); filter: blur(34px); }
 .landing-art { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; mask-image: radial-gradient(circle,#000 38%,#000d 62%,transparent 73%); pointer-events: auto; touch-action: pan-y; }
-.landing-slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.025); transition: opacity 1s ease,transform 1.4s ease; }
+.landing-slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.025); mask-image: linear-gradient(transparent 13%,#000 25%,#000 75%,transparent 87%); transition: opacity 1s ease,transform 1.4s ease; }
 .landing-slide.active { opacity: 1; transform: scale(1); }
-.landing-art img { width: 100%; height: 100%; object-fit: cover; object-position: var(--cover-position,84% 34%); filter: saturate(.70) brightness(.76); }
+.landing-art img { width: 100%; height: 100%; object-fit: cover; object-position: var(--cover-position,84% 34%); filter: saturate(.90) brightness(.88); }
 .orbit-fallback { position: absolute; inset: 1%; border: 1px solid #8fc8ff6b; border-radius: 50%; transform: rotate(-25deg) scaleY(.68); box-shadow: 0 0 12px #9da3ff40,inset 0 0 12px #8dc4ff20; }
 .orbit-fallback::after { content: ''; position: absolute; inset: -5%; border: 1px solid #a4a4fc34; border-radius: 50%; transform: rotate(55deg) scaleY(.85); }
 .landing.fx-ready .orbit-fallback { opacity: .2; }
@@ -89,7 +89,7 @@ body[data-landing] .mobile-menu { background: rgba(10,18,30,.97); border-color: 
 .cover-controls > button:hover { color: #fff; background: #ffffff0a; }
 .cover-controls svg { width: 15px; height: 15px; }
 .cover-dots { display: flex; align-items: center; gap: 2px; }
-.cover-dots button { display: grid; place-items: center; width: 14px; height: 36px; padding: 0; }
+.cover-dots button { display: grid; place-items: center; flex: 0 0 14px; width: 14px; height: 36px; padding: 0; }
 .cover-dots button::after { content: ''; width: 4px; height: 4px; border-radius: 4px; background: #8091ad; transition: width .3s,background .3s; }
 .cover-dots button[aria-pressed="true"]::after { width: 14px; background: #d1deff; box-shadow: 0 0 12px #a2b6ff40; }
 .cover-play, .is-paused .cover-pause { display: none; }
@@ -300,6 +300,8 @@ body:has(dialog[open]) { overflow: hidden; }
     .landing-primary { padding: 12px 21px; }
     .landing-scroll { bottom: 8px; left: 50%; right: auto; height: 24px; transform: translateX(-50%); }
     .cover-controls { left: 50%; right: auto; bottom: 46px; transform: translateX(-50%); width: max-content; }
+    .cover-dots { max-width: 144px; overflow-x: auto; scrollbar-width: none; }
+    .cover-dots::-webkit-scrollbar { display: none; }
     .home-layout { padding-block: 33px 44px; scroll-margin-top: 0; }
     .feed-heading { margin-bottom: 18px; }
     .feed-heading h2 { font-size: 21px; }

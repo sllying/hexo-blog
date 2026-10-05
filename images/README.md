@@ -1,3 +1,3 @@
 # 图片资源
 
-场景图库原图、网页 WebP 和手机版本在 `generated/`，清单与记录见 [SOURCES.md](SOURCES.md)。导航与关于页使用 `neuro-chibi-avatar.webp`，浏览器使用 `neuro-chibi-favicon.png`。没有保留旧站点的第三方图片文件。
+当前图库在 `illustrations/`：12 张原图、分享图、圆形轮播版本、手机版本、总览及提示词。角色为东方、Neuro、Evil 与甘城，画风统一参考用户于 2026-10-05 上传的图片。生成记录见 [SOURCES.md](SOURCES.md)。保留已认可的 Q 版 Neuro 头像及浏览器图标。上一版图库已备份到项目外。
